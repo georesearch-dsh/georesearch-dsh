@@ -1,6 +1,6 @@
 import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
 import { digestTree } from '@georesearch/dsh-contracts'
 import { afterEach, describe, expect, it } from 'vitest'
 import {
@@ -8,14 +8,33 @@ import {
   includeDistributionPath,
   rewriteWorkspaceRanges,
 } from '../scripts/distribution-integrity.js'
+import { loadReleaseMetadata } from '../scripts/release-metadata.js'
 
 const temporaryRoots: string[] = []
+const workspaceRoot = resolve(import.meta.dirname, '..')
 
 afterEach(async () => {
   await Promise.all(temporaryRoots.splice(0).map(path => rm(path, { recursive: true, force: true })))
 })
 
 describe('distribution integrity', () => {
+  it('uses versioned release time instead of the build clock', async () => {
+    const release = await loadReleaseMetadata(workspaceRoot, '0.1.0')
+    const manifest = JSON.parse(
+      await readFile(join(workspaceRoot, 'dist', 'distribution', 'distribution-manifest.json'), 'utf8'),
+    ) as { productVersion: string; createdAt: string }
+    const builder = await readFile(join(workspaceRoot, 'scripts', 'build-distribution.ts'), 'utf8')
+
+    expect(release).toEqual({
+      schemaVersion: 1,
+      productVersion: '0.1.0',
+      createdAt: '2026-08-27T10:30:00.611Z',
+    })
+    expect(manifest.productVersion).toBe(release.productVersion)
+    expect(manifest.createdAt).toBe(release.createdAt)
+    expect(builder).not.toContain('nowUtc')
+  })
+
   it('matches digestTree directory traversal when sibling package names share a prefix', async () => {
     const root = await mkdtemp(join(tmpdir(), 'georesearch-distribution-integrity-'))
     temporaryRoots.push(root)

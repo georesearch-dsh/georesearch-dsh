@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "capturedAt": "2026-08-27T09:44:01.398Z",
+  "capturedAt": "2026-08-27T13:00:17.111Z",
   "status": "verified",
   "harness": {
     "version": "0.1.0-rc.5",
@@ -13,9 +13,9 @@
       "sourceTreeDigest": "sha256:357c4d09536a5b07dc54c8d6d3f10f12015d8b2ce910fd9880bea8bb5e2a74ce",
       "fileCount": 7412,
       "localPatch": {
-        "id": "structured-output-bounded-recovery-and-array-limits-v2",
+        "id": "structured-output-bounded-recovery-and-array-limits-v4",
         "manifestPath": "D:\\DHS\\georesearch-dsh\\docs\\harness-local-patch.json",
-        "manifestSha256": "sha256:faf0e0b8373a5a4b4a2764b4df085bdf8eb155bf68e715f3ea27e179c9324c14",
+        "manifestSha256": "sha256:831e3c901f4d8cc5a6df26c437e93f0d6b6e831fe0b5b64da6a4d3791475d978",
         "fileCount": 67
       },
       "localMirrorMatchesExpectedPatch": true,

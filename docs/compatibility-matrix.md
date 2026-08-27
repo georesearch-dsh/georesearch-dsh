@@ -6,7 +6,7 @@ does not imply support.
 
 | Component | Supported | Evidence and boundary |
 | --- | --- | --- |
-| DeepSeek Harness | `0.1.0-rc.5` plus `structured-output-bounded-recovery-and-array-limits-v2` | Official source archive commit `47f943859bef60e4160492346772ded9b24f765a`; archive and source-tree digests are recorded in `phase0-baseline.json`, and every permitted local difference is fixed by `harness-local-patch.json`. |
+| DeepSeek Harness | `0.1.0-rc.5` plus `structured-output-bounded-recovery-and-array-limits-v4` | Official source archive commit `47f943859bef60e4160492346772ded9b24f765a`; archive and source-tree digests are recorded in `phase0-baseline.json`, and every permitted local difference is fixed by `harness-local-patch.json`. |
 | DeepSeek visual model | `deepseek-v4-flash-vision-exp` through the official API | Experimental model released 2026-08-21. GeoResearch uses `https://api.deepseek.com/chat/completions` with the managed `DEEPSEEK_API_KEY`; exact limits and sources are recorded in `deepseek-vision.md`. |
 | Cordis | `4.0.1` only | Direct Harness imports are confined to `@georesearch/dsh-compat-rc5`. |
 | Node.js | `^22.19.0` or `>=24.0.0` | Enforced by every runtime package engine declaration. |

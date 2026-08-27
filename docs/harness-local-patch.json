@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "structured-output-bounded-recovery-and-array-limits-v2",
+  "id": "structured-output-bounded-recovery-and-array-limits-v4",
   "baselineCommit": "47f943859bef60e4160492346772ded9b24f765a",
-  "reason": "Bound structured-output serializer recovery, including schema-validated container-closer normalization, terminate the child run after its second invalid structured-output call, and preserve and enforce array minItems/maxItems constraints.",
+  "reason": "Bound structured-output serializer recovery, including schema-validated container-closer normalization, one omitted nested array closer before the next object property, and the unique schema-valid removal of one empty trailing object from an array that exceeds maxItems by one; terminate the child run after its second invalid structured-output call; and preserve and enforce array minItems/maxItems constraints.",
   "files": [
     {
       "path": ".agents/notes/implemented/architecture/2026-07-12-agent-scope-runtime-design.i18n.yaml",
@@ -301,18 +301,18 @@
     },
     {
       "path": "packages/subagent/subagent-in-process-driver/README.i18n.yaml",
-      "sha256": "sha256:241295c94e5f8fb19b1df89230fc89ed97982b8c3b352d746dd36ba95b3cc2d7",
+      "sha256": "sha256:07dd419241e6c10733b2003e5df5a45e678104903e4015759d45431d0d831410",
       "size": 454
     },
     {
       "path": "packages/subagent/subagent-in-process-driver/README.md",
-      "sha256": "sha256:0152721498edf3ca33f15b9c3376829d30759fe3aba0a6a9972680a80a380ec0",
-      "size": 10171
+      "sha256": "sha256:f2a329d42aa001337c10d123567b6484c105a2c3267a52bf4ce54f22d0b24ed2",
+      "size": 10513
     },
     {
       "path": "packages/subagent/subagent-in-process-driver/README.zh.md",
-      "sha256": "sha256:9505aac0bbbbfa90371856c68624e7397882b88c3f8cd2b4e172f43577666096",
-      "size": 9897
+      "sha256": "sha256:89462d6456f97b55b2ff20e5f8e41ee9da566e04ce54c5b8c64c96323a4815b5",
+      "size": 10192
     },
     {
       "path": "packages/subagent/subagent-in-process-driver/package.json",
@@ -321,13 +321,13 @@
     },
     {
       "path": "packages/subagent/subagent-in-process-driver/src/structured.ts",
-      "sha256": "sha256:5833f83897582cb06d8940929782ce653292d8354ce1197098692ac28920e9f7",
-      "size": 14356
+      "sha256": "sha256:1cedf8f9c0a10b92e27a0e3371e46c3fdef0d595c0074fbca38ff245266a97c1",
+      "size": 19260
     },
     {
       "path": "packages/subagent/subagent-in-process-driver/tests/structured.spec.ts",
-      "sha256": "sha256:cf3dacf60e5c92fff833a5168c5d0f97c63bf8cc43b083d7cd27e899b3119b90",
-      "size": 42063
+      "sha256": "sha256:9abca91bda41cb4258e6734ffbbc41be3964e1d0f68db1e20e1e60fc21a2b691",
+      "size": 50178
     },
     {
       "path": "packages/workflow/tool-workflow/src/index.ts",

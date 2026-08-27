@@ -1,11 +1,13 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { join, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { PRODUCT_VERSION, digestTree, nowUtc } from '@georesearch/dsh-contracts'
+import { PRODUCT_VERSION, digestTree } from '@georesearch/dsh-contracts'
 import { includeDistributionPath, rewriteWorkspaceRanges } from './distribution-integrity.ts'
+import { loadReleaseMetadata } from './release-metadata.ts'
 import { WORKSPACE_PACKAGES } from './workspace-packages.ts'
 
 const root = resolve(fileURLToPath(new URL('..', import.meta.url)))
+const releaseMetadata = await loadReleaseMetadata(root, PRODUCT_VERSION)
 const output = join(root, 'dist', 'distribution')
 await rm(output, { recursive: true, force: true })
 await mkdir(join(output, 'packages'), { recursive: true })
@@ -64,7 +66,7 @@ const manifest = {
   presetTreeDigest: (await digestTree(presetRoot)).digest,
   pythonDirectory: relative(output, pythonRoot).replaceAll('\\', '/'),
   pythonTreeDigest: (await digestTree(pythonRoot)).digest,
-  createdAt: nowUtc(),
+  createdAt: releaseMetadata.createdAt,
 }
 await writeFile(join(output, 'distribution-manifest.json'), `${JSON.stringify(manifest, undefined, 2)}\n`, 'utf8')
 process.stdout.write(`${JSON.stringify({ output, packages: packages.length }, undefined, 2)}\n`)

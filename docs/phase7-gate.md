@@ -18,7 +18,9 @@ the distribution, then explicitly runs the self-contained installer tarball
 against a clean home, Windows-native functional probes, TypeScript and Python
 scientific golden suites, and the Phase 7 boundary verifier. The explicit
 tarball rerun prevents a clean checkout from silently skipping the test before
-the tarball exists.
+the tarball exists. `release-metadata.json` pins the versioned distribution
+creation time, so repeated builds produce the same manifest digest instead of
+embedding the wall clock.
 
 `probe:phase7-live` writes `dist/reports/phase7-live-e2e.json`. It clones the
 pinned Rasterio repository, reads the public Rasterio documentation PDF,

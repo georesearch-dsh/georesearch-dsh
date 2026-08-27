@@ -1,8 +1,10 @@
 import { access, readdir, readFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { loadReleaseMetadata } from './release-metadata.ts'
 
 const root = resolve(fileURLToPath(new URL('..', import.meta.url)))
+const releaseMetadata = await loadReleaseMetadata(root, '0.1.0')
 const rootManifest = await readJson(join(root, 'package.json')) as {
   readonly version: string
   readonly packageManager: string
@@ -50,7 +52,7 @@ if (baseline.status !== 'verified'
   || baseline.harness.commit !== '47f943859bef60e4160492346772ded9b24f765a'
   || baseline.harness.sourceIdentity.verifiedCommitOrArchive !== true
   || baseline.harness.sourceIdentity.localMirrorMatchesExpectedPatch !== true
-  || baseline.harness.sourceIdentity.localPatch.id !== 'structured-output-bounded-recovery-and-array-limits-v2'
+  || baseline.harness.sourceIdentity.localPatch.id !== 'structured-output-bounded-recovery-and-array-limits-v4'
   || baseline.harness.sourceIdentity.localPatch.fileCount !== 67
   || baseline.cordis.version !== '4.0.1'
   || baseline.gate.phase1EntryPassed !== true) {
@@ -119,12 +121,14 @@ if (geospatialImporter === undefined
 
 const distribution = await readJson(join(root, 'dist', 'distribution', 'distribution-manifest.json')) as {
   readonly productVersion: string
+  readonly createdAt: string
   readonly packages: readonly Array<{
     readonly name: string
     readonly treeDigest: string
   }>
 }
 if (distribution.productVersion !== rootManifest.version
+  || distribution.createdAt !== releaseMetadata.createdAt
   || distribution.packages.length !== packageNames.length
   || distribution.packages.some(entry => !packageNames.includes(entry.name)
     || !/^sha256:[0-9a-f]{64}$/u.test(entry.treeDigest))) {
@@ -274,6 +278,7 @@ process.stdout.write(`${JSON.stringify({
   operatorDocumentation: true,
   providerExtensionDocumentation: true,
   automaticDeepSeekVision: true,
+  reproducibleDistributionIdentity: true,
   telemetryDisabled: true,
 }, undefined, 2)}\n`)
 
