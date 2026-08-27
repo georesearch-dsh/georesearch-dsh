@@ -12,7 +12,7 @@ describe('pinned Harness source baseline', () => {
       archiveSha256: HARNESS_BASELINE.archiveSha256,
       sourceTreeDigest: HARNESS_BASELINE.sourceTreeDigest,
       sourceFileCount: HARNESS_BASELINE.sourceFileCount,
-      localPatchId: 'structured-output-bounded-recovery-and-array-limits-v1',
+      localPatchId: 'structured-output-bounded-recovery-and-array-limits-v2',
       localPatchFileCount: 67,
       localMirrorMatchesExpectedPatch: true,
       lockfileSha256: HARNESS_BASELINE.lockfileSha256,

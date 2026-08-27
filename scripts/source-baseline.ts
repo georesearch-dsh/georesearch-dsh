@@ -36,7 +36,7 @@ interface HarnessLocalPatchManifest {
   readonly files: readonly HarnessLocalPatchFile[]
 }
 
-const LOCAL_PATCH_MANIFEST_SHA256 = 'sha256:b66cddd8e00e1ba086d9bddff0efdf21e8fa30332c82394ff8e753b0e8139d29'
+const LOCAL_PATCH_MANIFEST_SHA256 = 'sha256:faf0e0b8373a5a4b4a2764b4df085bdf8eb155bf68e715f3ea27e179c9324c14'
 
 export async function verifyHarnessBaseline(workspaceRoot: string): Promise<HarnessBaselineProof> {
   const parent = resolve(workspaceRoot, '..')

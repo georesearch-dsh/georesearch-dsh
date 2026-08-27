@@ -50,7 +50,7 @@ if (baseline.status !== 'verified'
   || baseline.harness.commit !== '47f943859bef60e4160492346772ded9b24f765a'
   || baseline.harness.sourceIdentity.verifiedCommitOrArchive !== true
   || baseline.harness.sourceIdentity.localMirrorMatchesExpectedPatch !== true
-  || baseline.harness.sourceIdentity.localPatch.id !== 'structured-output-bounded-recovery-and-array-limits-v1'
+  || baseline.harness.sourceIdentity.localPatch.id !== 'structured-output-bounded-recovery-and-array-limits-v2'
   || baseline.harness.sourceIdentity.localPatch.fileCount !== 67
   || baseline.cordis.version !== '4.0.1'
   || baseline.gate.phase1EntryPassed !== true) {

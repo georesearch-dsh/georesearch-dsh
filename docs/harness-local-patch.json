@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "structured-output-bounded-recovery-and-array-limits-v1",
+  "id": "structured-output-bounded-recovery-and-array-limits-v2",
   "baselineCommit": "47f943859bef60e4160492346772ded9b24f765a",
-  "reason": "Bound structured-output serializer recovery, terminate the child run after its second invalid structured-output call, and preserve and enforce array minItems/maxItems constraints.",
+  "reason": "Bound structured-output serializer recovery, including schema-validated container-closer normalization, terminate the child run after its second invalid structured-output call, and preserve and enforce array minItems/maxItems constraints.",
   "files": [
     {
       "path": ".agents/notes/implemented/architecture/2026-07-12-agent-scope-runtime-design.i18n.yaml",
@@ -321,13 +321,13 @@
     },
     {
       "path": "packages/subagent/subagent-in-process-driver/src/structured.ts",
-      "sha256": "sha256:4bd95d5d42321d2a6b9a9b01fa76436f4a16d52330d688c35786b9fc0b01269e",
-      "size": 12600
+      "sha256": "sha256:5833f83897582cb06d8940929782ce653292d8354ce1197098692ac28920e9f7",
+      "size": 14356
     },
     {
       "path": "packages/subagent/subagent-in-process-driver/tests/structured.spec.ts",
-      "sha256": "sha256:a4f665c62b669d66e090dad4470008cecb3ad681707ded60fc6e41ae44eccc99",
-      "size": 41232
+      "sha256": "sha256:cf3dacf60e5c92fff833a5168c5d0f97c63bf8cc43b083d7cd27e899b3119b90",
+      "size": 42063
     },
     {
       "path": "packages/workflow/tool-workflow/src/index.ts",
