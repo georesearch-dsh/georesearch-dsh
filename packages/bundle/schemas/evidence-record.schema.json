@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://georesearch.local/schemas/evidence-record.schema.json",
+  "title": "GeoResearch Evidence Record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "sourceId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifactId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "paperReadReceiptId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pageStart": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "pageEnd": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "pageStart",
+        "pageEnd"
+      ]
+    },
+    "proposition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "relation": {
+      "type": "string",
+      "enum": [
+        "supports",
+        "partially-supports",
+        "contradicts",
+        "background-only",
+        "insufficient"
+      ]
+    },
+    "paraphrase": {
+      "type": "string",
+      "minLength": 1
+    },
+    "quotedText": {
+      "type": "string",
+      "minLength": 1
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "evidenceId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifactDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "extractionLineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "providerId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "providerVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parserId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parserVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "configDigest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "providerId",
+        "providerVersion",
+        "parserId",
+        "parserVersion",
+        "configDigest"
+      ]
+    },
+    "reviewStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "accepted",
+        "rejected",
+        "needs-review"
+      ]
+    },
+    "committedAt": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "sourceId",
+    "artifactId",
+    "paperReadReceiptId",
+    "locator",
+    "proposition",
+    "relation",
+    "paraphrase",
+    "limitations",
+    "evidenceId",
+    "artifactDigest",
+    "extractionLineage",
+    "reviewStatus",
+    "committedAt",
+    "digest"
+  ]
+}

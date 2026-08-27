@@ -1,0 +1,26 @@
+{
+  "name": "@georesearch/dsh-writing-service",
+  "version": "0.1.0",
+  "description": "WritingPacket-isolated manuscript candidate and traceability audit service for GeoResearch Phase 6",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    }
+  },
+  "files": ["lib", "README.md", "LICENSE"],
+  "scripts": { "build": "tsc -b" },
+  "dependencies": {
+    "@georesearch/dsh-compat-rc5": "workspace:*",
+    "@georesearch/dsh-contracts": "workspace:*",
+    "@georesearch/dsh-installation-guard": "workspace:*",
+    "@georesearch/dsh-policy": "workspace:*",
+    "@georesearch/dsh-project-service": "workspace:*"
+  },
+  "peerDependencies": { "@deepseek-ai/cordis": "4.0.1" },
+  "engines": { "node": "^22.19.0 || >=24.0.0" },
+  "license": "MIT"
+}

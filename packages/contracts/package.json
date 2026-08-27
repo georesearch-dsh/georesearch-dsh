@@ -1,0 +1,22 @@
+{
+  "name": "@georesearch/dsh-contracts",
+  "version": "0.1.0",
+  "description": "Stable GeoResearch roles, installation records, digests, schemas, and error codes",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    }
+  },
+  "files": ["lib", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "license": "MIT"
+}

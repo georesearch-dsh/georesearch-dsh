@@ -1,0 +1,11 @@
+packages:
+  - packages/*
+
+linkWorkspacePackages: true
+autoInstallPeers: false
+verifyDepsBeforeRun: false
+
+allowBuilds:
+  esbuild: true
+  koffi: true
+  tesseract.js: false

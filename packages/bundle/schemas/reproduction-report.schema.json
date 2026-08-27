@@ -1,0 +1,298 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://georesearch.local/schemas/reproduction-report.schema.json",
+  "title": "GeoResearch Reproduction Report",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "kind": {
+      "const": "reproduction-report"
+    },
+    "planId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "baselineAuditId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "finalAuditId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "runIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "exactly-reproduced",
+        "metric-equivalent",
+        "functionally-reproduced",
+        "conceptually-reproduced",
+        "partially-reproduced",
+        "blocked-by-missing-data",
+        "blocked-by-environment",
+        "failed-with-diagnosis"
+      ]
+    },
+    "metricResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resultId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+          },
+          "expectedValue": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "observedValue": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "comparison": {
+            "type": "string",
+            "enum": [
+              "match",
+              "within-tolerance",
+              "different",
+              "unavailable"
+            ]
+          }
+        },
+        "required": [
+          "resultId",
+          "expectedValue",
+          "observedValue",
+          "unit",
+          "comparison"
+        ]
+      }
+    },
+    "paperDescription": {
+      "type": "string",
+      "minLength": 1
+    },
+    "officialCodeBehavior": {
+      "type": "string",
+      "minLength": 1
+    },
+    "localImplementationAndEnvironment": {
+      "type": "string",
+      "minLength": 1
+    },
+    "necessaryModifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "path",
+          "description",
+          "reason"
+        ]
+      }
+    },
+    "resultDifferences": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "differenceSources": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "unresolvedDetails": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relatedRunIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "relatedArtifactIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "relatedRunIds",
+          "relatedArtifactIds"
+        ]
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "reportId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceBindingVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "planDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "baselineAuditDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "finalAuditDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "reportArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "artifactId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "artifactId",
+        "digest",
+        "kind"
+      ]
+    },
+    "reviewStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "accepted",
+        "rejected",
+        "needs-review"
+      ]
+    },
+    "committedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "kind",
+    "planId",
+    "baselineAuditId",
+    "finalAuditId",
+    "runIds",
+    "status",
+    "metricResults",
+    "paperDescription",
+    "officialCodeBehavior",
+    "localImplementationAndEnvironment",
+    "necessaryModifications",
+    "resultDifferences",
+    "differenceSources",
+    "unresolvedDetails",
+    "diagnostics",
+    "limitations",
+    "reportId",
+    "projectId",
+    "workspaceId",
+    "workspaceBindingVersion",
+    "planDigest",
+    "baselineAuditDigest",
+    "finalAuditDigest",
+    "reportArtifact",
+    "reviewStatus",
+    "committedAt",
+    "digest"
+  ]
+}

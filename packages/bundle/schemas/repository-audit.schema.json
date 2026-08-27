@@ -1,0 +1,418 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://georesearch.local/schemas/repository-audit.schema.json",
+  "title": "GeoResearch Repository Audit",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "auditId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceBindingVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "sourceId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "capability": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "providerId": {
+              "const": "git-cli"
+            },
+            "providerVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "shell": {
+              "const": false
+            },
+            "readOnlyCommands": {
+              "const": true
+            },
+            "maxFiles": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "maxChanges": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "maxHashedBytes": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "providerId",
+            "providerVersion",
+            "shell",
+            "readOnlyCommands",
+            "maxFiles",
+            "maxChanges",
+            "maxHashedBytes"
+          ]
+        },
+        "canonicalRoot": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gitDir": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gitCommonDir": {
+          "type": "string",
+          "minLength": 1
+        },
+        "remoteUrl": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "headCommit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "branch": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "detached": {
+          "type": "boolean"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "targetRef": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "targetCommit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "targetMatchesHead": {
+          "type": "boolean"
+        },
+        "dirty": {
+          "type": "boolean"
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "status": {
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "size": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "status",
+              "path"
+            ]
+          }
+        }
+      },
+      "required": [
+        "capability",
+        "canonicalRoot",
+        "gitDir",
+        "gitCommonDir",
+        "remoteUrl",
+        "headCommit",
+        "branch",
+        "detached",
+        "tags",
+        "targetRef",
+        "targetCommit",
+        "targetMatchesHead",
+        "dirty",
+        "changes"
+      ]
+    },
+    "sourceTreeDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "language": {
+            "type": "string",
+            "minLength": 1
+          },
+          "fileCount": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "language",
+          "fileCount"
+        ]
+      }
+    },
+    "buildSystems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "manifestPaths": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "name",
+          "manifestPaths"
+        ]
+      }
+    },
+    "entryPoints": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "configurationFiles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "dataDependencyPaths": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "environmentFiles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "testPaths": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "methodCodeDeltas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "deltaId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+          },
+          "evidenceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "paperStatement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "classification": {
+            "type": "string",
+            "enum": [
+              "matches",
+              "partially-matches",
+              "differs",
+              "missing-in-code",
+              "not-described-in-paper",
+              "unclear"
+            ]
+          },
+          "codeLocator": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "lineStart": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "lineEnd": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "fileDigest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "lineDigest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              }
+            },
+            "required": [
+              "path",
+              "lineStart",
+              "lineEnd",
+              "fileDigest",
+              "lineDigest"
+            ]
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "likelyImpact": {
+            "type": "string",
+            "minLength": 1
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "deltaId",
+          "evidenceId",
+          "paperStatement",
+          "classification",
+          "summary",
+          "likelyImpact",
+          "limitations"
+        ]
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "retryable": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "retryable"
+        ]
+      }
+    },
+    "auditedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "auditId",
+    "projectId",
+    "workspaceId",
+    "workspaceBindingVersion",
+    "sourceId",
+    "sourceDigest",
+    "repository",
+    "sourceTreeDigest",
+    "languages",
+    "buildSystems",
+    "entryPoints",
+    "configurationFiles",
+    "dataDependencyPaths",
+    "environmentFiles",
+    "testPaths",
+    "methodCodeDeltas",
+    "blockers",
+    "auditedAt",
+    "digest"
+  ]
+}

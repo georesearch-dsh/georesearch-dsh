@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://georesearch.local/schemas/validation-report.schema.json",
+  "title": "GeoResearch Validation Report",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "reportId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceBindingVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "planId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "planDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "subjects": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "geodata-report",
+              "dataset-manifest",
+              "experiment-spec",
+              "run",
+              "result",
+              "evidence",
+              "reproduction-report",
+              "claim",
+              "research-brief",
+              "manuscript"
+            ]
+          },
+          "subjectId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "kind",
+          "subjectId",
+          "digest"
+        ]
+      }
+    },
+    "validatorResults": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "validatorId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mandatory": {
+            "type": "boolean"
+          },
+          "configDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "passed",
+              "failed",
+              "blocked",
+              "error",
+              "not-applicable"
+            ]
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "findingId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "validatorId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "severity": {
+                  "type": "string",
+                  "enum": [
+                    "info",
+                    "warning",
+                    "error",
+                    "hard"
+                  ]
+                },
+                "code": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "subjectIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "findingId",
+                "validatorId",
+                "severity",
+                "code",
+                "message",
+                "subjectIds"
+              ]
+            }
+          }
+        },
+        "required": [
+          "validatorId",
+          "version",
+          "mandatory",
+          "configDigest",
+          "status",
+          "findings"
+        ]
+      }
+    },
+    "overall": {
+      "type": "string",
+      "enum": [
+        "passed",
+        "failed",
+        "blocked"
+      ]
+    },
+    "completedAt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "reportId",
+    "projectId",
+    "workspaceId",
+    "workspaceBindingVersion",
+    "planId",
+    "planDigest",
+    "subjects",
+    "validatorResults",
+    "overall",
+    "completedAt",
+    "digest"
+  ]
+}

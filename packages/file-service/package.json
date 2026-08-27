@@ -1,0 +1,89 @@
+{
+  "name": "@georesearch/dsh-file-service",
+  "version": "0.1.0",
+  "description": "Session-bound universal file intake and safe read tools for GeoResearch",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./pdf": {
+      "types": "./lib/pdf.d.ts",
+      "default": "./lib/pdf.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-ui-attachment",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-input-trigger"
+      ],
+      "platform": "web"
+    }
+  },
+  "files": [
+    "lib",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/clean-file-service-bundle.mjs && tsc -b && tsc -p tsconfig.client.json && tsdown"
+  },
+  "dependencies": {
+    "@georesearch/dsh-compat-rc5": "workspace:*",
+    "@georesearch/dsh-contracts": "workspace:*",
+    "@georesearch/dsh-installation-guard": "workspace:*",
+    "@georesearch/dsh-policy": "workspace:*",
+    "@georesearch/dsh-project-provider-files": "workspace:*",
+    "@georesearch/dsh-project-service": "workspace:*",
+    "@tesseract.js-data/chi_sim": "1.0.0",
+    "@tesseract.js-data/eng": "1.0.0",
+    "@napi-rs/canvas": "1.0.6",
+    "bmp-js": "0.1.0",
+    "h5wasm": "0.10.3",
+    "hyparquet": "1.28.2",
+    "hyparquet-compressors": "1.1.1",
+    "lucide-react": "^0.468.0",
+    "netcdfjs": "4.0.0",
+    "pdfjs-dist": "6.2.108",
+    "ppt-to-text": "1.0.1",
+    "saxes": "6.0.0",
+    "tar-stream": "^3.1.7",
+    "tesseract.js": "7.0.0",
+    "tesseract.js-core": "7.0.0",
+    "utif2": "4.1.0",
+    "word-extractor": "1.0.4",
+    "xlsx": "0.18.5",
+    "yauzl": "^3.2.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "4.0.1",
+    "@deepseek-ai/dsh-agent": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-attachment": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-credentials": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-client-runtime": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-client-ui-attachment": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-client-ui-conversation": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-client-ui-input-trigger": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-client-ui-primitives": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-client-ui-slots": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-host-webserver": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-llm": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-session": "0.1.0-rc.5",
+    "react": "^18.2.0"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "license": "MIT"
+}

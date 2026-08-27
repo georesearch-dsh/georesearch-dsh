@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://georesearch.local/schemas/result-record.schema.json",
+  "title": "GeoResearch Result Record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "resultId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "metricId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "value": {
+      "type": "number"
+    },
+    "unit": {
+      "type": "string",
+      "minLength": 1
+    },
+    "aggregation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "uncertainty": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "none",
+            "standard-deviation",
+            "standard-error",
+            "confidence-interval"
+          ]
+        },
+        "level": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "lower": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "upper": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "level",
+        "lower",
+        "upper"
+      ]
+    },
+    "comparisonTarget": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "datasetId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+        },
+        "region": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sensor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "split": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "datasetId",
+        "region",
+        "sensor",
+        "split"
+      ]
+    },
+    "artifactIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceBindingVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "experimentSpecId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "experimentSpecDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "runId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "runDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "datasetDigests": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      }
+    },
+    "validationStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "passed",
+        "failed",
+        "blocked"
+      ]
+    },
+    "artifactRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "artifactId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "artifactId",
+          "digest",
+          "kind"
+        ]
+      }
+    },
+    "committedAt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "resultId",
+    "metricId",
+    "value",
+    "unit",
+    "aggregation",
+    "uncertainty",
+    "comparisonTarget",
+    "scope",
+    "artifactIds",
+    "schemaVersion",
+    "projectId",
+    "workspaceId",
+    "workspaceBindingVersion",
+    "experimentSpecId",
+    "experimentSpecDigest",
+    "runId",
+    "runDigest",
+    "datasetDigests",
+    "validationStatus",
+    "artifactRefs",
+    "committedAt",
+    "digest"
+  ]
+}

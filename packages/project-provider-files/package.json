@@ -1,0 +1,26 @@
+{
+  "name": "@georesearch/dsh-project-provider-files",
+  "version": "0.1.0",
+  "description": "Crash-recoverable file provider for GeoResearch project state and artifacts",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    }
+  },
+  "files": ["lib", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@georesearch/dsh-contracts": "workspace:*",
+    "koffi": "3.1.1"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "license": "MIT"
+}

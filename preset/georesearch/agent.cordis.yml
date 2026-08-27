@@ -1,0 +1,25 @@
+# GeoResearch agent-plane composition. Host registries, persistence, sandbox,
+# approval, subagent providers, and the activation guard remain in the profile.
+
+- id: georesearch-profile-guard
+  name: ./profile-guard.mjs
+
+- id: persona
+  name: '@deepseek-ai/dsh-persona'
+  config:
+    text: >-
+      You are the GeoResearch Coordinator powered by {{model}}. Work from {{cwd}}
+      only through the capabilities visible in this session. Build traceable
+      evidence, bounded experiment candidates, independent review, and approved
+      writing inputs; never invent a source, run, result, or approval.
+
+- id: skill-filesystem
+  name: '@deepseek-ai/dsh-skill-filesystem'
+  config:
+    includeDefaultRoots: false
+    customSkillDirs:
+      - !!js "process.getBuiltinModule('node:url').fileURLToPath(new URL('skills/', baseUrl))"
+
+- id: georesearch-prompt
+  name: '@georesearch/dsh-prompt'
+  disabled: !!js "ctx.get('geoResearchInstallation', false) === undefined"

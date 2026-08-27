@@ -1,0 +1,343 @@
+{
+  "schemaVersion": 1,
+  "id": "structured-output-bounded-recovery-and-array-limits-v1",
+  "baselineCommit": "47f943859bef60e4160492346772ded9b24f765a",
+  "reason": "Bound structured-output serializer recovery, terminate the child run after its second invalid structured-output call, and preserve and enforce array minItems/maxItems constraints.",
+  "files": [
+    {
+      "path": ".agents/notes/implemented/architecture/2026-07-12-agent-scope-runtime-design.i18n.yaml",
+      "sha256": "sha256:6c7afff5be88f0bdc71fb93bfc0486a9ce87a11967bfba8893d77f4d5edf9096",
+      "size": 541
+    },
+    {
+      "path": ".agents/notes/implemented/architecture/2026-07-12-agent-scope-runtime-design.md",
+      "sha256": "sha256:220421a2e0503bd0f7c5aaab66b93b0f9200fd2c355e28e5098729fdd0758cd2",
+      "size": 39244
+    },
+    {
+      "path": ".agents/notes/implemented/architecture/2026-07-12-agent-scope-runtime-design.zh.md",
+      "sha256": "sha256:ecc2d5032450839a5679fdd01bc752eee96300f6b2585ec7220c723b2cbf5042",
+      "size": 35670
+    },
+    {
+      "path": ".agents/notes/implemented/architecture/2026-07-20-unified-json-value-schema-dsl.i18n.yaml",
+      "sha256": "sha256:9a785e9dcccbc276d99034dca797f7538953bb79e1fb35ab646b5136fbdf7c4b",
+      "size": 550
+    },
+    {
+      "path": ".agents/notes/implemented/architecture/2026-07-20-unified-json-value-schema-dsl.md",
+      "sha256": "sha256:014bcb544d77b1affa013bb69b76146dea679090a24f99b6433841b92111c894",
+      "size": 6375
+    },
+    {
+      "path": ".agents/notes/implemented/architecture/2026-07-20-unified-json-value-schema-dsl.zh.md",
+      "sha256": "sha256:fb12cd9d296bcc9ad9dac456b64577dbeed10443a9593b6954461e09a4343361",
+      "size": 6578
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "sha256:667a4acc5f642e0f390759c76ffdc61a8e8dd3fccb32287e910062c55c0a1c79",
+      "size": 15916
+    },
+    {
+      "path": "docs/config-catalog.i18n.yaml",
+      "sha256": "sha256:963a69570216beed30f2b286505f4dfe3328bddb2a8f8a2060a63205fda721d5",
+      "size": 438
+    },
+    {
+      "path": "docs/config-catalog.md",
+      "sha256": "sha256:eb71609d6e2f567d38d86dea88c8a6b518b0341e09aa62916df112a6497c68f2",
+      "size": 132470
+    },
+    {
+      "path": "docs/config-catalog.zh.md",
+      "sha256": "sha256:d5152f5e6b4733e698d4d27d94f293b31a8d4530e32db980f6163cd9ab06827a",
+      "size": 132937
+    },
+    {
+      "path": "docs/subsystems/tools.i18n.yaml",
+      "sha256": "sha256:885b4f0148db27c8fe4b75cf17c7486055e9ae67621438829b816f4931daa62a",
+      "size": 422
+    },
+    {
+      "path": "docs/subsystems/tools.md",
+      "sha256": "sha256:9fba64df1446ed50823030e7510ac5017f5071d2924cc4462a8a62d15ba6e0e5",
+      "size": 43250
+    },
+    {
+      "path": "docs/subsystems/tools.zh.md",
+      "sha256": "sha256:1fced148d4e8a7b39317d727ea78593e74a99003f5398152c1c38d9903f784d2",
+      "size": 42920
+    },
+    {
+      "path": "docs/tool-catalog.i18n.yaml",
+      "sha256": "sha256:ca7ad04848b12b609128320eb369c7d0dc7e0a3412c239fdd9e7ea53e4692a66",
+      "size": 432
+    },
+    {
+      "path": "docs/tool-catalog.md",
+      "sha256": "sha256:727ed9f18a1f6adf5bc18b6ee1f1d5a01268da474b761a54151932e39620e5f8",
+      "size": 80994
+    },
+    {
+      "path": "docs/tool-catalog.zh.md",
+      "sha256": "sha256:38fd0e1a8976c6452b17b2274041e2f98211f2a8e96afe9d0e04f7d5a66b5f63",
+      "size": 80638
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/advanced-toolchain/system-prompt.expected.md",
+      "sha256": "sha256:5a5a0ff51864bdbaded1957607d04f5f967587db5e6d793feb7feac3310372f6",
+      "size": 45203
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/advanced-toolchain/tool-schemas.expected.json",
+      "sha256": "sha256:0fe27558e240fee7ebadb01b1e236e4fc2d189763406a0d1c6f85c612a2a0259",
+      "size": 37932
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/bash-spill/session.jsonl",
+      "sha256": "sha256:fad4f9ccd225cc05c348ba3729a982c5367e8195d2e94aadb1ba04439a31efc0",
+      "size": 6238
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/bash-tool-turn/session.jsonl",
+      "sha256": "sha256:fdf678bff95da37415ef55ea6867a90fde24e1a214eb8d57fb85c55d7970ddc1",
+      "size": 8607
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/both-mode-turn/session.jsonl",
+      "sha256": "sha256:8805e1619a54286e116d7947124a2473859c4d0dfdd7d9037046972044d888ed",
+      "size": 11177
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/both-mode-turn/system-prompt.expected.md",
+      "sha256": "sha256:bc056978488273f259036eddbc54bca96d4fd7d30cd72df18feb97846ae3efd8",
+      "size": 27939
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/both-mode-turn/tool-schemas.expected.json",
+      "sha256": "sha256:696c40ca38684233e077da56d681af465f506c8a6e8d03255e5b3b132a3f969c",
+      "size": 28031
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/code-mode-turn/session.jsonl",
+      "sha256": "sha256:441264578e73bf998ee60e23685636d787bfb900ab4316377e1f16aeab9a2a12",
+      "size": 13791
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/code-mode-turn/system-prompt.expected.md",
+      "sha256": "sha256:2e2df04331003cf30e167d2b00466626f6d2f4c9c7f6f0fe41a5533aa9c9309c",
+      "size": 28100
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/lsp-definition/tool-schemas.expected.json",
+      "sha256": "sha256:ef4041eacbbd9cc8b2763755bae96ac8688ff0241815c06cdd0d7cb71f8f5325",
+      "size": 28177
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/packed-chunks/session.jsonl",
+      "sha256": "sha256:730a6a1be72e1771d01d0a68eb4a8a9142995c76b70f99209e107cc36d754fb0",
+      "size": 9332
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/product-subagent-both/tool-schemas.expected.json",
+      "sha256": "sha256:f57258d74596451b88ac68c3a9bf861bcb8cf61e5b40cbaefdc7df969e4a0cae",
+      "size": 29058
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/product-subagent-codex/tool-schemas.expected.json",
+      "sha256": "sha256:0d1539720fdfbda5e9ff109437294dadbd530e8dfe308b4b996d8e9adf03667c",
+      "size": 27996
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/pty-tools/tool-schemas.expected.json",
+      "sha256": "sha256:16bde5249cf29f480a8cf759ee99ca4b17db6da888f788b45bd8a0e93ab76f78",
+      "size": 30970
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/pwsh-tool-turn/tool-schemas.expected.json",
+      "sha256": "sha256:2e6ebc501b0a6f83c6be383581ee40de4102a23ef5be76d58d020f41567999e0",
+      "size": 4449
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/read-image/tool-schemas.expected.json",
+      "sha256": "sha256:fdcafe90ce871d9b1935dffd9fa2a6cc992188371e8b705f005147745722418f",
+      "size": 27415
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/session-query-spill/tool-schemas.expected.json",
+      "sha256": "sha256:6a7e492882be566179a91c4f68791c422b041a13f1e288756e8820c0df44ad60",
+      "size": 33349
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/subagent-child-question-rejection/tool-schemas.expected.json",
+      "sha256": "sha256:eaa2ea0c8ff448f4f69e452a153c264eb459f5068dc0c31c58c440e10f9540f6",
+      "size": 29346
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/subagent-continuable/tool-schemas.1.expected.json",
+      "sha256": "sha256:983b7d77893993d56815b99d03e73c30db200ec0a7f48fa1a16f11dfdd349289",
+      "size": 27853
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/subagent-continuable-inheritance/tool-schemas.1.expected.json",
+      "sha256": "sha256:983b7d77893993d56815b99d03e73c30db200ec0a7f48fa1a16f11dfdd349289",
+      "size": 27853
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/subagent-list-agents/tool-schemas.1.expected.json",
+      "sha256": "sha256:983b7d77893993d56815b99d03e73c30db200ec0a7f48fa1a16f11dfdd349289",
+      "size": 27853
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/subagent-report/tool-schemas.1.expected.json",
+      "sha256": "sha256:983b7d77893993d56815b99d03e73c30db200ec0a7f48fa1a16f11dfdd349289",
+      "size": 27853
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/text-turn/tool-schemas.expected.json",
+      "sha256": "sha256:cb0cc7dd2f5a00a4f4c6376f25d98bbf9235de447de7dd96aab3305fe694070c",
+      "size": 26940
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/tool-call-turn/session.jsonl",
+      "sha256": "sha256:043f9f1fa90ff1c4d8bffaa2344db51ce513fa078a530864586bf185471264b1",
+      "size": 8561
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/web-fetch/tool-schemas.expected.json",
+      "sha256": "sha256:03d1fd6adb3ee05522c86422b62c730c37aeb059f5e91d784ae3522c41dbbbeb",
+      "size": 27334
+    },
+    {
+      "path": "examples/acp-agent/tests/snapshots/workspace-edit/session.jsonl",
+      "sha256": "sha256:782c6285551cf3a7f3dccd4f5e26e5cd7804605a2f1922add93f7963812d1ab9",
+      "size": 16900
+    },
+    {
+      "path": "examples/headless-agent/tests/headless.snapshot.ts",
+      "sha256": "sha256:f9028b7abc0e99f6d6770972590cd3555fffa86a4dbb5586c7ad157a11e83b02",
+      "size": 43728
+    },
+    {
+      "path": "examples/headless-agent/tests/snapshots/advanced-toolchain/session.1.jsonl",
+      "sha256": "sha256:58f72bed43a9bf40b355b63ddd7181159f8f9f77e8c59907944acf0741cf2e82",
+      "size": 65815
+    },
+    {
+      "path": "examples/headless-agent/tests/snapshots/advanced-toolchain/session.2.jsonl",
+      "sha256": "sha256:82d43714365e000eefea4b025cc67b0a40eabbe5549fefb69d2c24a4f3c7c967",
+      "size": 65798
+    },
+    {
+      "path": "examples/headless-agent/tests/snapshots/advanced-toolchain/session.jsonl",
+      "sha256": "sha256:29060b599ed99d583f029d5611e406d30e110892f19e85b3798fe0e6a6186a0a",
+      "size": 82235
+    },
+    {
+      "path": "examples/headless-agent/tests/snapshots/compaction-recovery/session.jsonl",
+      "sha256": "sha256:02cafb4cd85732124c93bcc5fdcd9ee006fe73e2f170884121e8ad3a897b85a7",
+      "size": 26447
+    },
+    {
+      "path": "examples/headless-agent/tests/snapshots/compaction-recovery/stream-json.expected.jsonl",
+      "sha256": "sha256:e4567b09ec4cb126b0f5e61e885868f1510bebac1b38e79ce2c2c924abddf102",
+      "size": 10181
+    },
+    {
+      "path": "examples/headless-agent/tests/snapshots/pty-tools/session.jsonl",
+      "sha256": "sha256:18973c9cbfe3514fc9d186ea0852e975db62a57875dfa9a318945a2426aea115",
+      "size": 36638
+    },
+    {
+      "path": "examples/headless-agent/tests/snapshots/ralph-loop/session.1.jsonl",
+      "sha256": "sha256:adb7993e4dd9610ea1bd0062d10d3c77b6705a06066d30c7d0e2e5e852f5e776",
+      "size": 1479
+    },
+    {
+      "path": "examples/headless-agent/tests/snapshots/ralph-loop/session.2.jsonl",
+      "sha256": "sha256:088b7ec5a4af2443c0fd7d116ce17f300d5e667feeedc7f780e034ee563d623e",
+      "size": 1407
+    },
+    {
+      "path": "packages/core/tools/README.i18n.yaml",
+      "sha256": "sha256:90ee805faf6082eb30747b0aa007046d9fd0e751e6aa2a52430a5956b0613cdd",
+      "size": 429
+    },
+    {
+      "path": "packages/core/tools/README.md",
+      "sha256": "sha256:2fca2d160f830856e72a55e96003dd4ef398aea355eba76ceb62fa66fad75974",
+      "size": 33629
+    },
+    {
+      "path": "packages/core/tools/README.zh.md",
+      "sha256": "sha256:a3435ecf18f5deae53dd42afe77aef568fd8a4a787f79b18ddd2d9b6f3cc4f16",
+      "size": 33294
+    },
+    {
+      "path": "packages/core/tools/src/index.ts",
+      "sha256": "sha256:75ab527a6e376a67d3b7eefa72b996916c76fd03ebad9fc19dabfe2b55109308",
+      "size": 89238
+    },
+    {
+      "path": "packages/core/tools/src/json-schema.ts",
+      "sha256": "sha256:edc8af35b40db6c386d970e245781ae04fb6302d2fe0f4cbe8450a68a64d8787",
+      "size": 28412
+    },
+    {
+      "path": "packages/core/tools/tests/json-schema.spec.ts",
+      "sha256": "sha256:b76e0b4d0c0727dc480885b6af17f31ea65de741c7ae512cc3c85e0427381a11",
+      "size": 23993
+    },
+    {
+      "path": "packages/core/tools/tests/tools.spec.ts",
+      "sha256": "sha256:2de40f2c9c1c1b219f3263869c8b1ee8ec1b0b406a713c683d6719ff2b7b02d3",
+      "size": 109455
+    },
+    {
+      "path": "packages/extensions/tool-cordis/src/api-catalog.ts",
+      "sha256": "sha256:a4e2875670a664c9024c423d36c7c4c7d04c6bbfdaa7bea590f43ec8fa194ce4",
+      "size": 340860
+    },
+    {
+      "path": "packages/subagent/subagent-in-process-driver/README.i18n.yaml",
+      "sha256": "sha256:241295c94e5f8fb19b1df89230fc89ed97982b8c3b352d746dd36ba95b3cc2d7",
+      "size": 454
+    },
+    {
+      "path": "packages/subagent/subagent-in-process-driver/README.md",
+      "sha256": "sha256:0152721498edf3ca33f15b9c3376829d30759fe3aba0a6a9972680a80a380ec0",
+      "size": 10171
+    },
+    {
+      "path": "packages/subagent/subagent-in-process-driver/README.zh.md",
+      "sha256": "sha256:9505aac0bbbbfa90371856c68624e7397882b88c3f8cd2b4e172f43577666096",
+      "size": 9897
+    },
+    {
+      "path": "packages/subagent/subagent-in-process-driver/package.json",
+      "sha256": "sha256:0d49a37a1f1f845cae6af0580682fab96ba7b5c6bef653f6cb4ccabeb4ed127f",
+      "size": 2253
+    },
+    {
+      "path": "packages/subagent/subagent-in-process-driver/src/structured.ts",
+      "sha256": "sha256:4bd95d5d42321d2a6b9a9b01fa76436f4a16d52330d688c35786b9fc0b01269e",
+      "size": 12600
+    },
+    {
+      "path": "packages/subagent/subagent-in-process-driver/tests/structured.spec.ts",
+      "sha256": "sha256:a4f665c62b669d66e090dad4470008cecb3ad681707ded60fc6e41ae44eccc99",
+      "size": 41232
+    },
+    {
+      "path": "packages/workflow/tool-workflow/src/index.ts",
+      "sha256": "sha256:bc61df288a01858fdc578dc948a832979b6a520341477ffdd6c9e91ecc01fc12",
+      "size": 16120
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "sha256:0a8238a42b1b64b1c61a692b325150bbc8f75b55debcb906e2d9528902bd06c2",
+      "size": 682759
+    }
+  ]
+}

@@ -1,0 +1,2259 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://georesearch.local/schemas/writing-packet.schema.json",
+  "title": "GeoResearch Writing Packet",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "packetId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceBindingVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "researchBrief": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": 1
+        },
+        "briefId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "researchQuestion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "background": {
+          "type": "string",
+          "minLength": 1
+        },
+        "motivation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "region": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "bbox": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "items": {
+                "type": "number"
+              }
+            },
+            "crs": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "description"
+          ]
+        },
+        "timeRange": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "start": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "end": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "start",
+            "end"
+          ]
+        },
+        "researchSubjects": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "dataModalities": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "hypotheses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "hypothesisId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "statement": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "hypothesisId",
+              "statement"
+            ]
+          }
+        },
+        "expectedContributions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "knownAssumptions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "successCriteria": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "userConfirmation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "confirmed": {
+              "const": true
+            },
+            "confirmedAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "confirmedBy": {
+              "const": "user"
+            },
+            "auditNote": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "confirmed",
+            "confirmedAt",
+            "confirmedBy",
+            "auditNote"
+          ]
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "committedAt": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "briefId",
+        "title",
+        "researchQuestion",
+        "background",
+        "motivation",
+        "region",
+        "timeRange",
+        "researchSubjects",
+        "dataModalities",
+        "hypotheses",
+        "expectedContributions",
+        "constraints",
+        "knownAssumptions",
+        "successCriteria",
+        "userConfirmation",
+        "digest",
+        "committedAt"
+      ]
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "const": 1
+          },
+          "kind": {
+            "const": "claim"
+          },
+          "claimId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "claimType": {
+            "type": "string",
+            "enum": [
+              "literature-fact",
+              "experimental-observation",
+              "derived-calculation",
+              "scientific-inference",
+              "hypothesis",
+              "speculation"
+            ]
+          },
+          "supportRefs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "evidence",
+                    "result",
+                    "claim",
+                    "hypothesis"
+                  ]
+                },
+                "recordId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "kind",
+                "recordId",
+                "digest"
+              ]
+            }
+          },
+          "calculation": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "operation": {
+                    "type": "string",
+                    "enum": [
+                      "difference",
+                      "ratio",
+                      "percent-change",
+                      "mean"
+                    ]
+                  },
+                  "operandResultIds": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "value": {
+                    "type": "number"
+                  },
+                  "inputDigests": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "pattern": "^sha256:[0-9a-f]{64}$"
+                    }
+                  }
+                },
+                "required": [
+                  "operation",
+                  "operandResultIds",
+                  "value",
+                  "inputDigests"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "intendedSections": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "enum": [
+                "abstract",
+                "introduction",
+                "related-work",
+                "methods",
+                "results",
+                "discussion",
+                "conclusion",
+                "future-work"
+              ]
+            }
+          },
+          "validationReportIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "reviewRecordIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "projectId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "workspaceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "workspaceBindingVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "supportState": {
+            "type": "string",
+            "enum": [
+              "proposed",
+              "source-backed",
+              "experiment-supported",
+              "independently-checked",
+              "contradicted",
+              "insufficient-evidence",
+              "rejected"
+            ]
+          },
+          "approvalState": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "approved",
+              "rejected"
+            ]
+          },
+          "integrity": {
+            "type": "string",
+            "enum": [
+              "verified",
+              "failed"
+            ]
+          },
+          "validity": {
+            "type": "string",
+            "enum": [
+              "current",
+              "stale"
+            ]
+          },
+          "approval": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "requested": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "approved",
+                  "rejected"
+                ]
+              },
+              "outcome": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "approved",
+                  "rejected",
+                  "cancelled",
+                  "unavailable"
+                ]
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "user",
+                  "coordinator"
+                ]
+              },
+              "callId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "decidedAt": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "requested",
+              "outcome",
+              "source",
+              "callId",
+              "decidedAt"
+            ]
+          },
+          "committedAt": {
+            "type": "string",
+            "minLength": 1
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "kind",
+          "claimId",
+          "statement",
+          "claimType",
+          "supportRefs",
+          "calculation",
+          "limitations",
+          "intendedSections",
+          "validationReportIds",
+          "reviewRecordIds",
+          "projectId",
+          "workspaceId",
+          "workspaceBindingVersion",
+          "supportState",
+          "approvalState",
+          "integrity",
+          "validity",
+          "approval",
+          "committedAt",
+          "digest"
+        ]
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "const": 1
+          },
+          "sourceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "authors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "orcid": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "name",
+                "orcid"
+              ]
+            }
+          },
+          "year": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "venue": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stableIdentifier": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "doi",
+                  "provider",
+                  "url",
+                  "other"
+                ]
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ]
+          },
+          "sourceType": {
+            "type": "string",
+            "minLength": 1
+          },
+          "versionRelation": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "is-version-of",
+                  "has-version",
+                  "is-preprint-of",
+                  "is-version-of-record"
+                ]
+              },
+              "relatedIdentifier": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "kind",
+              "relatedIdentifier"
+            ]
+          },
+          "retrievedAt": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+          },
+          "providerTrace": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "providerId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "providerVersion": {
+                "type": "string",
+                "minLength": 1
+              },
+              "retrievedAt": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+              },
+              "credentialRef": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "credentialBindingEpoch": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "requestId": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "providerId",
+              "providerVersion",
+              "retrievedAt",
+              "credentialRef",
+              "credentialBindingEpoch",
+              "requestId"
+            ]
+          },
+          "codeRefs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "label": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "url",
+                "label"
+              ]
+            }
+          },
+          "dataRefs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "label": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "url",
+                "label"
+              ]
+            }
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "resolved",
+              "partial",
+              "unresolved"
+            ]
+          },
+          "searchChain": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "chainId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "generation": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "providerItemId": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "chainId",
+              "generation",
+              "providerItemId"
+            ]
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "sourceId",
+          "title",
+          "authors",
+          "year",
+          "venue",
+          "stableIdentifier",
+          "sourceType",
+          "versionRelation",
+          "retrievedAt",
+          "providerTrace",
+          "codeRefs",
+          "dataRefs",
+          "status",
+          "searchChain",
+          "digest"
+        ]
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "const": 1
+          },
+          "sourceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "artifactId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "paperReadReceiptId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "locator": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "pageStart": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "pageEnd": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "pageStart",
+              "pageEnd"
+            ]
+          },
+          "proposition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relation": {
+            "type": "string",
+            "enum": [
+              "supports",
+              "partially-supports",
+              "contradicts",
+              "background-only",
+              "insufficient"
+            ]
+          },
+          "paraphrase": {
+            "type": "string",
+            "minLength": 1
+          },
+          "quotedText": {
+            "type": "string",
+            "minLength": 1
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "evidenceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "artifactDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "extractionLineage": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "providerId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "providerVersion": {
+                "type": "string",
+                "minLength": 1
+              },
+              "parserId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "parserVersion": {
+                "type": "string",
+                "minLength": 1
+              },
+              "configDigest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              }
+            },
+            "required": [
+              "providerId",
+              "providerVersion",
+              "parserId",
+              "parserVersion",
+              "configDigest"
+            ]
+          },
+          "reviewStatus": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "accepted",
+              "rejected",
+              "needs-review"
+            ]
+          },
+          "committedAt": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "sourceId",
+          "artifactId",
+          "paperReadReceiptId",
+          "locator",
+          "proposition",
+          "relation",
+          "paraphrase",
+          "limitations",
+          "evidenceId",
+          "artifactDigest",
+          "extractionLineage",
+          "reviewStatus",
+          "committedAt",
+          "digest"
+        ]
+      }
+    },
+    "experimentSpecs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "const": 1
+          },
+          "specId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+          },
+          "experimentId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "projectId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "workspaceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "workspaceBindingVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "researchBriefDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "hypothesisIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "repositoryAuditId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+          },
+          "repositoryAuditDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "sourceTreeDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "datasets": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "datasetId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+                },
+                "datasetDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                },
+                "role": {
+                  "type": "string",
+                  "enum": [
+                    "training",
+                    "validation",
+                    "testing",
+                    "covariate",
+                    "labels"
+                  ]
+                }
+              },
+              "required": [
+                "datasetId",
+                "datasetDigest",
+                "role"
+              ]
+            }
+          },
+          "baselines": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "baselineId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "implementationRef": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "preprocessingPolicy": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "trainingBudget": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "postprocessingPolicy": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "baselineId",
+                "description",
+                "implementationRef",
+                "preprocessingPolicy",
+                "trainingBudget",
+                "postprocessingPolicy"
+              ]
+            }
+          },
+          "independentVariables": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "values": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "name",
+                "values"
+              ]
+            }
+          },
+          "controlVariables": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "value": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "name",
+                "value"
+              ]
+            }
+          },
+          "splitStrategy": {
+            "type": "string",
+            "minLength": 1
+          },
+          "preprocessing": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "stepId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "appliesTo": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "parameters": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "stepId",
+                "description",
+                "appliesTo",
+                "parameters"
+              ]
+            }
+          },
+          "metrics": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "metricId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "unit": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "direction": {
+                  "type": "string",
+                  "enum": [
+                    "maximize",
+                    "minimize",
+                    "descriptive"
+                  ]
+                },
+                "aggregation": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "implementationRef": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "metricId",
+                "name",
+                "unit",
+                "direction",
+                "aggregation",
+                "implementationRef"
+              ]
+            }
+          },
+          "seeds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "ablations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ablationId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "changedVariables": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "ablationId",
+                "description",
+                "changedVariables"
+              ]
+            }
+          },
+          "statisticalPlan": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "method": {
+                "type": "string",
+                "minLength": 1
+              },
+              "confidenceLevel": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "exclusiveMaximum": 1
+              },
+              "effectSize": {
+                "type": "string",
+                "minLength": 1
+              },
+              "multipleComparison": {
+                "type": "string",
+                "minLength": 1
+              },
+              "spatialAutocorrelation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "blockingStrategy": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "method",
+              "confidenceLevel",
+              "effectSize",
+              "multipleComparison",
+              "spatialAutocorrelation",
+              "blockingStrategy"
+            ]
+          },
+          "stoppingRule": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resourceRequirements": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "acceptanceCriteria": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "parentSpecDigest": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "amendmentIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "protocolDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "status": {
+            "const": "frozen"
+          },
+          "frozenAt": {
+            "type": "string",
+            "minLength": 1
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "specId",
+          "experimentId",
+          "revision",
+          "projectId",
+          "workspaceId",
+          "workspaceBindingVersion",
+          "researchBriefDigest",
+          "hypothesisIds",
+          "repositoryAuditId",
+          "repositoryAuditDigest",
+          "sourceTreeDigest",
+          "datasets",
+          "baselines",
+          "independentVariables",
+          "controlVariables",
+          "splitStrategy",
+          "preprocessing",
+          "metrics",
+          "seeds",
+          "ablations",
+          "statisticalPlan",
+          "stoppingRule",
+          "resourceRequirements",
+          "acceptanceCriteria",
+          "parentSpecDigest",
+          "amendmentIds",
+          "protocolDigest",
+          "status",
+          "frozenAt",
+          "digest"
+        ]
+      }
+    },
+    "runs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "const": 1
+          },
+          "runId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "local-test",
+              "formal"
+            ]
+          },
+          "projectId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "workspaceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "workspaceBindingVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "experimentSpecDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "sourceTreeDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "environmentDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "datasetDigests": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "argv": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "argvDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "cwd": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "canonicalPath": {
+                "type": "string",
+                "minLength": 1
+              },
+              "volumeIdentity": {
+                "type": "string",
+                "minLength": 1
+              },
+              "fileIdentity": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "canonicalPath",
+              "volumeIdentity",
+              "fileIdentity"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "starting",
+              "running",
+              "collecting",
+              "succeeded",
+              "failed",
+              "cancelled",
+              "recovery-required"
+            ]
+          },
+          "launchId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pid": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "processCreationTime": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+          },
+          "supervisorReceiptDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "resourceLimits": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "graceMs": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "stdoutMaxBytes": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "stderrMaxBytes": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "timeoutMs",
+              "graceMs",
+              "stdoutMaxBytes",
+              "stderrMaxBytes"
+            ]
+          },
+          "stdoutPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "stderrPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "startedAt": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+          },
+          "endedAt": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+          },
+          "exitCode": {
+            "oneOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sandbox": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "read-only",
+                  "workspace-write",
+                  "danger-full-access"
+                ]
+              },
+              "enforcement": {
+                "type": "string",
+                "enum": [
+                  "full",
+                  "partial"
+                ]
+              }
+            },
+            "required": [
+              "mode"
+            ],
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "mode": {
+                      "enum": [
+                        "read-only",
+                        "workspace-write"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "mode"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "enforcement"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "mode": {
+                      "const": "danger-full-access"
+                    }
+                  },
+                  "required": [
+                    "mode"
+                  ]
+                },
+                "then": {
+                  "not": {
+                    "required": [
+                      "enforcement"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "approval": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "outcome": {
+                "const": "allowed-once"
+              },
+              "callId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "approvedAt": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+              }
+            },
+            "required": [
+              "outcome",
+              "callId",
+              "approvedAt"
+            ]
+          },
+          "outputArtifactRefs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "artifactId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                },
+                "kind": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "artifactId",
+                "digest",
+                "kind"
+              ]
+            }
+          },
+          "failureClassification": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string",
+                "minLength": 1
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1
+              },
+              "retryable": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "code",
+              "message",
+              "retryable"
+            ]
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "runId",
+          "kind",
+          "projectId",
+          "workspaceId",
+          "workspaceBindingVersion",
+          "experimentSpecDigest",
+          "sourceTreeDigest",
+          "environmentDigest",
+          "datasetDigests",
+          "argv",
+          "argvDigest",
+          "cwd",
+          "state",
+          "launchId",
+          "resourceLimits",
+          "stdoutPath",
+          "stderrPath",
+          "sandbox",
+          "outputArtifactRefs"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "formal"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "required": [
+                "seed"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "running"
+                }
+              },
+              "required": [
+                "state"
+              ]
+            },
+            "then": {
+              "required": [
+                "pid",
+                "processCreationTime",
+                "supervisorReceiptDigest",
+                "startedAt"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "enum": [
+                    "collecting",
+                    "succeeded",
+                    "failed",
+                    "cancelled"
+                  ]
+                }
+              },
+              "required": [
+                "state"
+              ]
+            },
+            "then": {
+              "required": [
+                "endedAt",
+                "exitCode"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "succeeded"
+                }
+              },
+              "required": [
+                "state"
+              ]
+            },
+            "then": {
+              "properties": {
+                "exitCode": {
+                  "const": 0
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resultId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+          },
+          "metricId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+          },
+          "value": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "aggregation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uncertainty": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "standard-deviation",
+                  "standard-error",
+                  "confidence-interval"
+                ]
+              },
+              "level": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "lower": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "upper": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "kind",
+              "level",
+              "lower",
+              "upper"
+            ]
+          },
+          "comparisonTarget": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "scope": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "datasetId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+              },
+              "region": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sensor": {
+                "type": "string",
+                "minLength": 1
+              },
+              "split": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "datasetId",
+              "region",
+              "sensor",
+              "split"
+            ]
+          },
+          "artifactIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "schemaVersion": {
+            "const": 1
+          },
+          "projectId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "workspaceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "workspaceBindingVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "experimentSpecId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+          },
+          "experimentSpecDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "runId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+          },
+          "runDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "datasetDigests": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          },
+          "validationStatus": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "passed",
+              "failed",
+              "blocked"
+            ]
+          },
+          "artifactRefs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "artifactId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                },
+                "kind": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "artifactId",
+                "digest",
+                "kind"
+              ]
+            }
+          },
+          "committedAt": {
+            "type": "string",
+            "minLength": 1
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "resultId",
+          "metricId",
+          "value",
+          "unit",
+          "aggregation",
+          "uncertainty",
+          "comparisonTarget",
+          "scope",
+          "artifactIds",
+          "schemaVersion",
+          "projectId",
+          "workspaceId",
+          "workspaceBindingVersion",
+          "experimentSpecId",
+          "experimentSpecDigest",
+          "runId",
+          "runDigest",
+          "datasetDigests",
+          "validationStatus",
+          "artifactRefs",
+          "committedAt",
+          "digest"
+        ]
+      }
+    },
+    "validationReports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "const": 1
+          },
+          "reportId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "projectId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "workspaceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "workspaceBindingVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "planId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "planDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "subjects": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "geodata-report",
+                    "dataset-manifest",
+                    "experiment-spec",
+                    "run",
+                    "result",
+                    "evidence",
+                    "reproduction-report",
+                    "claim",
+                    "research-brief",
+                    "manuscript"
+                  ]
+                },
+                "subjectId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "kind",
+                "subjectId",
+                "digest"
+              ]
+            }
+          },
+          "validatorResults": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "validatorId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "mandatory": {
+                  "type": "boolean"
+                },
+                "configDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "passed",
+                    "failed",
+                    "blocked",
+                    "error",
+                    "not-applicable"
+                  ]
+                },
+                "findings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "findingId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "validatorId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "severity": {
+                        "type": "string",
+                        "enum": [
+                          "info",
+                          "warning",
+                          "error",
+                          "hard"
+                        ]
+                      },
+                      "code": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "message": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "subjectIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "uniqueItems": true
+                      }
+                    },
+                    "required": [
+                      "findingId",
+                      "validatorId",
+                      "severity",
+                      "code",
+                      "message",
+                      "subjectIds"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "validatorId",
+                "version",
+                "mandatory",
+                "configDigest",
+                "status",
+                "findings"
+              ]
+            }
+          },
+          "overall": {
+            "type": "string",
+            "enum": [
+              "passed",
+              "failed",
+              "blocked"
+            ]
+          },
+          "completedAt": {
+            "type": "string",
+            "minLength": 1
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "reportId",
+          "projectId",
+          "workspaceId",
+          "workspaceBindingVersion",
+          "planId",
+          "planDigest",
+          "subjects",
+          "validatorResults",
+          "overall",
+          "completedAt",
+          "digest"
+        ]
+      }
+    },
+    "artifactRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "artifactId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "artifactId",
+          "digest",
+          "kind"
+        ]
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "forbiddenClaimIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "builtAt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "packetId",
+    "projectId",
+    "workspaceId",
+    "workspaceBindingVersion",
+    "researchBrief",
+    "claims",
+    "sources",
+    "evidence",
+    "experimentSpecs",
+    "runs",
+    "results",
+    "validationReports",
+    "artifactRefs",
+    "limitations",
+    "forbiddenClaimIds",
+    "builtAt",
+    "digest"
+  ]
+}

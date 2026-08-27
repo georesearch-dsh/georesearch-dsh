@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://georesearch.local/schemas/literature-search-result.schema.json",
+  "title": "GeoResearch Literature Search Result",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "providerItemId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "authors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "orcid": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "name",
+                "orcid"
+              ]
+            }
+          },
+          "year": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "venue": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "doi": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stableIdentifier": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceType": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "providerItemId",
+          "title",
+          "authors",
+          "year",
+          "venue",
+          "doi",
+          "stableIdentifier",
+          "sourceType",
+          "url"
+        ]
+      }
+    },
+    "completeness": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "partial"
+      ]
+    },
+    "stopReason": {
+      "type": "string",
+      "enum": [
+        "result-limit",
+        "page-limit",
+        "rate-limited",
+        "timeout",
+        "cancelled",
+        "provider-failure",
+        "no-new-items"
+      ]
+    },
+    "continuationRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "continuationId": {
+          "type": "string",
+          "minLength": 32
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expiresAt": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+        }
+      },
+      "required": [
+        "continuationId",
+        "generation",
+        "expiresAt"
+      ]
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ]
+      }
+    },
+    "providerTrace": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "providerId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "providerVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retrievedAt": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+        },
+        "credentialRef": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "credentialBindingEpoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "requestId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "providerId",
+        "providerVersion",
+        "retrievedAt",
+        "credentialRef",
+        "credentialBindingEpoch",
+        "requestId"
+      ]
+    },
+    "searchChainTrace": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "chainId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "requestDigest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "pagesAdvancedTotal": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "uniqueItemsTotal": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "chainId",
+        "generation",
+        "requestDigest",
+        "pagesAdvancedTotal",
+        "uniqueItemsTotal"
+      ]
+    },
+    "trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pagesAdvanced": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "pagesAdvanced"
+      ]
+    }
+  },
+  "required": [
+    "items",
+    "completeness",
+    "warnings",
+    "providerTrace",
+    "searchChainTrace",
+    "trace"
+  ]
+}

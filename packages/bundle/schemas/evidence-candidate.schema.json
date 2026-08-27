@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://georesearch.local/schemas/evidence-candidate.schema.json",
+  "title": "GeoResearch Evidence Candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "sourceId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifactId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "paperReadReceiptId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pageStart": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "pageEnd": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "pageStart",
+        "pageEnd"
+      ]
+    },
+    "proposition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "relation": {
+      "type": "string",
+      "enum": [
+        "supports",
+        "partially-supports",
+        "contradicts",
+        "background-only",
+        "insufficient"
+      ]
+    },
+    "paraphrase": {
+      "type": "string",
+      "minLength": 1
+    },
+    "quotedText": {
+      "type": "string",
+      "minLength": 1
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "sourceId",
+    "artifactId",
+    "paperReadReceiptId",
+    "locator",
+    "proposition",
+    "relation",
+    "paraphrase",
+    "limitations"
+  ]
+}

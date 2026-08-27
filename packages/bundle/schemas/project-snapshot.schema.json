@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://georesearch.local/schemas/project-snapshot.schema.json",
+  "title": "GeoResearch ProjectSnapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "generation": { "type": "integer", "minimum": 0 },
+    "stateDigest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "workspaceId": { "type": "string", "minLength": 1 },
+    "readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scope": { "type": "string", "enum": ["missing", "in-progress", "ready", "blocked", "stale"] },
+        "evidence": { "type": "string", "enum": ["missing", "in-progress", "ready", "blocked", "stale"] },
+        "reproduction": { "type": "string", "enum": ["missing", "in-progress", "ready", "blocked", "stale"] },
+        "protocol": { "type": "string", "enum": ["missing", "in-progress", "ready", "blocked", "stale"] },
+        "implementation": { "type": "string", "enum": ["missing", "in-progress", "ready", "blocked", "stale"] },
+        "runs": { "type": "string", "enum": ["missing", "in-progress", "ready", "blocked", "stale"] },
+        "validation": { "type": "string", "enum": ["missing", "in-progress", "ready", "blocked", "stale"] },
+        "claims": { "type": "string", "enum": ["missing", "in-progress", "ready", "blocked", "stale"] },
+        "manuscript": { "type": "string", "enum": ["missing", "in-progress", "ready", "blocked", "stale"] }
+      },
+      "required": ["scope", "evidence", "reproduction", "protocol", "implementation", "runs", "validation", "claims", "manuscript"]
+    },
+    "activeTaskIds": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "visibleArtifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "artifactId": { "type": "string", "minLength": 1 },
+          "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+          "kind": { "type": "string", "minLength": 1 }
+        },
+        "required": ["artifactId", "digest", "kind"]
+      }
+    },
+    "blockers": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "staleIndicators": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+  },
+  "required": [
+    "schemaVersion", "projectId", "generation", "stateDigest", "workspaceId",
+    "readiness", "activeTaskIds", "visibleArtifacts", "blockers", "staleIndicators"
+  ]
+}

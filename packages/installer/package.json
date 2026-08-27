@@ -1,0 +1,36 @@
+{
+  "name": "@georesearch/dsh-installer",
+  "version": "0.1.0",
+  "description": "Explicit fault-atomic installer for the managed GeoResearch distribution",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "bin": {
+    "georesearch-dsh": "./lib/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    }
+  },
+  "files": ["lib", "distribution.tar", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@georesearch/dsh-contracts": "workspace:*",
+    "@georesearch/dsh-installation-guard": "workspace:*",
+    "@georesearch/dsh-runtime-lease": "workspace:*",
+    "js-yaml": "^4.1.0",
+    "koffi": "3.1.1",
+    "tar-stream": "^3.1.7"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "4.0.1"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,594 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Yan-Zero/dsh-std/bb194ad53a72f4fa7da1286c88dcebb488b43eb9/packages/manifest/schema/dsh-plugin-0.15.schema.json",
+  "manifestVersion": "0.15",
+  "id": "org.deepseek.georesearch",
+  "name": "GeoResearch for DeepSeek Harness",
+  "version": "0.1.0",
+  "facets": {
+    "host": {
+      "entry": "lib/standard-facet.js",
+      "apiVersion": "v1alpha1"
+    }
+  },
+  "permissions": [
+    {
+      "name": "storage.local",
+      "scope": "component",
+      "reason": "Persist project, artifact, run, evidence, validation, claim, and writing records."
+    },
+    {
+      "name": "messages.observe",
+      "scope": "owned-sessions",
+      "reason": "Maintain role and delegation policy for GeoResearch-owned Agent sessions."
+    },
+    {
+      "name": "x-georesearch.fs.workspace-read",
+      "scope": "workspace",
+      "reason": "Inspect user-selected research data, papers, repositories, and generated artifacts."
+    },
+    {
+      "name": "x-georesearch.fs.workspace-write",
+      "scope": "workspace",
+      "reason": "Write approved run outputs and deliverables through Host-enforced workspace policy."
+    },
+    {
+      "name": "x-georesearch.net.crossref",
+      "scope": "https://api.crossref.org",
+      "reason": "Run bounded bibliographic searches and replay-safe continuation requests."
+    },
+    {
+      "name": "x-georesearch.net.source-read",
+      "scope": "https",
+      "reason": "Read user-requested public papers, repositories, and scientific datasets."
+    },
+    {
+      "name": "x-georesearch.process.git-readonly",
+      "scope": "workspace",
+      "reason": "Audit source repositories using the bounded read-only Git provider."
+    },
+    {
+      "name": "x-georesearch.process.python-worker",
+      "scope": "managed-worker",
+      "reason": "Run the persistent bounded geospatial worker and approved experiment candidates."
+    },
+    {
+      "name": "x-georesearch.credentials.deepseek",
+      "scope": "DEEPSEEK_API_KEY",
+      "reason": "Resolve the Host-managed credential for bounded DeepSeek vision analysis."
+    }
+  ],
+  "contributes": {
+    "x-org.deepseek.georesearch.extensions": [
+      {
+        "id": "org.deepseek.georesearch.tool.archive-list",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "archive_list",
+        "spec": {
+          "target": "archive_list",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch archive_list tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.archive-read",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "archive_read",
+        "spec": {
+          "target": "archive_read",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch archive_read tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.artifact-commit",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "artifact_commit",
+        "spec": {
+          "target": "artifact_commit",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch artifact_commit tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.artifact-read",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "artifact_read",
+        "spec": {
+          "target": "artifact_read",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch artifact_read tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.attachment-inspect",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "attachment_inspect",
+        "spec": {
+          "target": "attachment_inspect",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch attachment_inspect tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.attachment-list",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "attachment_list",
+        "spec": {
+          "target": "attachment_list",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch attachment_list tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.attachment-read",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "attachment_read",
+        "spec": {
+          "target": "attachment_read",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch attachment_read tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.attachment-read-image",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "attachment_read_image",
+        "spec": {
+          "target": "attachment_read_image",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch attachment_read_image tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.citation-check",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "citation_check",
+        "spec": {
+          "target": "citation_check",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch citation_check tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.citation-validate",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "citation_validate",
+        "spec": {
+          "target": "citation_validate",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch citation_validate tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.claim-commit",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "claim_commit",
+        "spec": {
+          "target": "claim_commit",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch claim_commit tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.delegate-experiment",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "delegate_experiment",
+        "spec": {
+          "target": "delegate_experiment",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch delegate_experiment tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.delegate-literature",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "delegate_literature",
+        "spec": {
+          "target": "delegate_literature",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch delegate_literature tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.delegate-review",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "delegate_review",
+        "spec": {
+          "target": "delegate_review",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch delegate_review tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.delegate-writing",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "delegate_writing",
+        "spec": {
+          "target": "delegate_writing",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch delegate_writing tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.delegation-bootstrap",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "delegation_bootstrap",
+        "spec": {
+          "target": "delegation_bootstrap",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch delegation_bootstrap tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.deliverable-publish",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "deliverable_publish",
+        "spec": {
+          "target": "deliverable_publish",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch deliverable_publish tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.evidence-candidate",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "evidence_candidate",
+        "spec": {
+          "target": "evidence_candidate",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch evidence_candidate tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.experiment-spec-candidate",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "experiment_spec_candidate",
+        "spec": {
+          "target": "experiment_spec_candidate",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch experiment_spec_candidate tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.experiment-spec-commit",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "experiment_spec_commit",
+        "spec": {
+          "target": "experiment_spec_commit",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch experiment_spec_commit tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.experiment-validate",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "experiment_validate",
+        "spec": {
+          "target": "experiment_validate",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch experiment_validate tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.formal-run-candidate",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "formal_run_candidate",
+        "spec": {
+          "target": "formal_run_candidate",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch formal_run_candidate tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.formal-run-submit",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "formal_run_submit",
+        "spec": {
+          "target": "formal_run_submit",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch formal_run_submit tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.geodata-inspect",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "geodata_inspect",
+        "spec": {
+          "target": "geodata_inspect",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch geodata_inspect tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.geodata-validate",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "geodata_validate",
+        "spec": {
+          "target": "geodata_validate",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch geodata_validate tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.literature-continue",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "literature_continue",
+        "spec": {
+          "target": "literature_continue",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch literature_continue tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.literature-search",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "literature_search",
+        "spec": {
+          "target": "literature_search",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch literature_search tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.local-test-run",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "local_test_run",
+        "spec": {
+          "target": "local_test_run",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch local_test_run tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.manuscript-candidate",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "manuscript_candidate",
+        "spec": {
+          "target": "manuscript_candidate",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch manuscript_candidate tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.manuscript-validate",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "manuscript_validate",
+        "spec": {
+          "target": "manuscript_validate",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch manuscript_validate tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.paper-read",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "paper_read",
+        "spec": {
+          "target": "paper_read",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch paper_read tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.repository-audit",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "repository_audit",
+        "spec": {
+          "target": "repository_audit",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch repository_audit tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.reproduction-plan-candidate",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "reproduction_plan_candidate",
+        "spec": {
+          "target": "reproduction_plan_candidate",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch reproduction_plan_candidate tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.research-brief-commit",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "research_brief_commit",
+        "spec": {
+          "target": "research_brief_commit",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch research_brief_commit tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.research-project-status",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "research_project_status",
+        "spec": {
+          "target": "research_project_status",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch research_project_status tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.result-commit",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "result_commit",
+        "spec": {
+          "target": "result_commit",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch result_commit tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.result-read",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "result_read",
+        "spec": {
+          "target": "result_read",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch result_read tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.review-candidate",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "review_candidate",
+        "spec": {
+          "target": "review_candidate",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch review_candidate tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.review-subject-read",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "review_subject_read",
+        "spec": {
+          "target": "review_subject_read",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch review_subject_read tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.run-cancel",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "run_cancel",
+        "spec": {
+          "target": "run_cancel",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch run_cancel tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.run-record-read",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "run_record_read",
+        "spec": {
+          "target": "run_record_read",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch run_record_read tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.run-status",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "run_status",
+        "spec": {
+          "target": "run_status",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch run_status tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.source-resolve",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "source_resolve",
+        "spec": {
+          "target": "source_resolve",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch source_resolve tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.test-spec-candidate",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "test_spec_candidate",
+        "spec": {
+          "target": "test_spec_candidate",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch test_spec_candidate tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.writing-packet-build",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "writing_packet_build",
+        "spec": {
+          "target": "writing_packet_build",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch writing_packet_build tool without changing its execution contract."
+        }
+      },
+      {
+        "id": "org.deepseek.georesearch.tool.writing-packet-read",
+        "apiVersion": "tools.dsh/v1alpha1",
+        "kind": "ToolOverride",
+        "name": "writing_packet_read",
+        "spec": {
+          "target": "writing_packet_read",
+          "executionOnly": true,
+          "description": "Apply standard lifecycle ownership to the existing GeoResearch writing_packet_read tool without changing its execution contract."
+        }
+      }
+    ]
+  },
+  "license": "MIT",
+  "compat": {
+    "hosts": [
+      "deepseek-harness@0.1.0-rc.5",
+      "@dsh-std/adapter-dsh@0.1.1-rc.1"
+    ]
+  },
+  "overrides": [
+    {
+      "target": "@deepseek-ai/dsh-profile/cordis.patch.yml",
+      "kind": "patch",
+      "description": "Compose the existing GeoResearch rc.5 product services and bootstrap the DSH Standard adapter."
+    },
+    {
+      "target": "@deepseek-ai/dsh-tools/agent-scoped-tool-view",
+      "kind": "patch",
+      "description": "Apply role-filtered GeoResearch tools and the read_image specialization through Harness policy."
+    },
+    {
+      "target": "@deepseek-ai/dsh-session/telemetry",
+      "kind": "patch",
+      "description": "Disable unredacted rc.5 session telemetry for the managed research profile."
+    }
+  ]
+}

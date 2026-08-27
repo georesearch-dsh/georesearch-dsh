@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://georesearch.local/schemas/claim-proposal.schema.json",
+  "title": "GeoResearch Claim Proposal",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "kind": {
+      "const": "claim"
+    },
+    "claimId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claimType": {
+      "type": "string",
+      "enum": [
+        "literature-fact",
+        "experimental-observation",
+        "derived-calculation",
+        "scientific-inference",
+        "hypothesis",
+        "speculation"
+      ]
+    },
+    "supportRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "evidence",
+              "result",
+              "claim",
+              "hypothesis"
+            ]
+          },
+          "recordId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "kind",
+          "recordId",
+          "digest"
+        ]
+      }
+    },
+    "calculation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "operation": {
+              "type": "string",
+              "enum": [
+                "difference",
+                "ratio",
+                "percent-change",
+                "mean"
+              ]
+            },
+            "operandResultIds": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "operation",
+            "operandResultIds"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "intendedSections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "abstract",
+          "introduction",
+          "related-work",
+          "methods",
+          "results",
+          "discussion",
+          "conclusion",
+          "future-work"
+        ]
+      }
+    },
+    "validationReportIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "reviewRecordIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "kind",
+    "claimId",
+    "statement",
+    "claimType",
+    "supportRefs",
+    "calculation",
+    "limitations",
+    "intendedSections",
+    "validationReportIds",
+    "reviewRecordIds"
+  ]
+}

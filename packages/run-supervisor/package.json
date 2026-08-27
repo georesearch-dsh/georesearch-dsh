@@ -1,0 +1,27 @@
+{
+  "name": "@georesearch/dsh-run-supervisor",
+  "version": "0.1.0",
+  "description": "Host-owned persistent launch supervisor for GeoResearch runs",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    }
+  },
+  "files": ["lib", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@georesearch/dsh-contracts": "workspace:*",
+    "@georesearch/dsh-project-provider-files": "workspace:*",
+    "koffi": "3.1.1"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "license": "MIT"
+}

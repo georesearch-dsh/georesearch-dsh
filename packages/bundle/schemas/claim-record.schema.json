@@ -1,0 +1,275 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://georesearch.local/schemas/claim-record.schema.json",
+  "title": "GeoResearch Claim Record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "kind": {
+      "const": "claim"
+    },
+    "claimId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claimType": {
+      "type": "string",
+      "enum": [
+        "literature-fact",
+        "experimental-observation",
+        "derived-calculation",
+        "scientific-inference",
+        "hypothesis",
+        "speculation"
+      ]
+    },
+    "supportRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "evidence",
+              "result",
+              "claim",
+              "hypothesis"
+            ]
+          },
+          "recordId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "kind",
+          "recordId",
+          "digest"
+        ]
+      }
+    },
+    "calculation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "operation": {
+              "type": "string",
+              "enum": [
+                "difference",
+                "ratio",
+                "percent-change",
+                "mean"
+              ]
+            },
+            "operandResultIds": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "value": {
+              "type": "number"
+            },
+            "inputDigests": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              }
+            }
+          },
+          "required": [
+            "operation",
+            "operandResultIds",
+            "value",
+            "inputDigests"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "intendedSections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "abstract",
+          "introduction",
+          "related-work",
+          "methods",
+          "results",
+          "discussion",
+          "conclusion",
+          "future-work"
+        ]
+      }
+    },
+    "validationReportIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "reviewRecordIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceBindingVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "supportState": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "source-backed",
+        "experiment-supported",
+        "independently-checked",
+        "contradicted",
+        "insufficient-evidence",
+        "rejected"
+      ]
+    },
+    "approvalState": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ]
+    },
+    "integrity": {
+      "type": "string",
+      "enum": [
+        "verified",
+        "failed"
+      ]
+    },
+    "validity": {
+      "type": "string",
+      "enum": [
+        "current",
+        "stale"
+      ]
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "requested": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "approved",
+            "rejected"
+          ]
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "approved",
+            "rejected",
+            "cancelled",
+            "unavailable"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "user",
+            "coordinator"
+          ]
+        },
+        "callId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decidedAt": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "requested",
+        "outcome",
+        "source",
+        "callId",
+        "decidedAt"
+      ]
+    },
+    "committedAt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "kind",
+    "claimId",
+    "statement",
+    "claimType",
+    "supportRefs",
+    "calculation",
+    "limitations",
+    "intendedSections",
+    "validationReportIds",
+    "reviewRecordIds",
+    "projectId",
+    "workspaceId",
+    "workspaceBindingVersion",
+    "supportState",
+    "approvalState",
+    "integrity",
+    "validity",
+    "approval",
+    "committedAt",
+    "digest"
+  ]
+}

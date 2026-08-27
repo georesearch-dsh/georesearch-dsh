@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://georesearch.local/schemas/manuscript-record.schema.json",
+  "title": "GeoResearch Manuscript Record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "kind": {
+      "const": "manuscript"
+    },
+    "manuscriptId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packetId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packetDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sectionId": {
+            "type": "string",
+            "enum": [
+              "abstract",
+              "introduction",
+              "related-work",
+              "methods",
+              "results",
+              "discussion",
+              "conclusion",
+              "future-work"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "blocks": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "blockId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "claimIds": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "evidenceIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                },
+                "resultIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                },
+                "numericRefs": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "literal": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "claimId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "resultId": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "literal",
+                      "claimId",
+                      "resultId"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "blockId",
+                "text",
+                "claimIds",
+                "evidenceIds",
+                "resultIds",
+                "numericRefs"
+              ]
+            }
+          }
+        },
+        "required": [
+          "sectionId",
+          "title",
+          "blocks"
+        ]
+      }
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceBindingVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "auditId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "validated",
+        "blocked"
+      ]
+    },
+    "createdAt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "kind",
+    "manuscriptId",
+    "packetId",
+    "packetDigest",
+    "title",
+    "sections",
+    "projectId",
+    "workspaceId",
+    "workspaceBindingVersion",
+    "auditId",
+    "status",
+    "createdAt",
+    "digest"
+  ]
+}

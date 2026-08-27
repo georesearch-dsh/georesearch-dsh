@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://georesearch.local/schemas/manuscript-audit.schema.json",
+  "title": "GeoResearch Manuscript Audit",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "auditId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "manuscriptId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packetId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packetDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "packetCurrent": {
+          "type": "boolean"
+        },
+        "claimsEligible": {
+          "type": "boolean"
+        },
+        "forbiddenClaimsAbsent": {
+          "type": "boolean"
+        },
+        "numbersTraceable": {
+          "type": "boolean"
+        },
+        "literatureTraceable": {
+          "type": "boolean"
+        },
+        "sectionsAllowed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "packetCurrent",
+        "claimsEligible",
+        "forbiddenClaimsAbsent",
+        "numbersTraceable",
+        "literatureTraceable",
+        "sectionsAllowed"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "findingId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "validatorId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "info",
+              "warning",
+              "error",
+              "hard"
+            ]
+          },
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "subjectIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "findingId",
+          "validatorId",
+          "severity",
+          "code",
+          "message",
+          "subjectIds"
+        ]
+      }
+    },
+    "overall": {
+      "type": "string",
+      "enum": [
+        "passed",
+        "failed",
+        "blocked"
+      ]
+    },
+    "auditedAt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "auditId",
+    "projectId",
+    "manuscriptId",
+    "packetId",
+    "packetDigest",
+    "checks",
+    "findings",
+    "overall",
+    "auditedAt",
+    "digest"
+  ]
+}

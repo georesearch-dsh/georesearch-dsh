@@ -1,0 +1,471 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://georesearch.local/schemas/literature-continuation.schema.json",
+  "title": "GeoResearch Literature Continuation",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "continuationIdDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "chainId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generation": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "active",
+        "reserved",
+        "dispatched-unknown",
+        "consumed",
+        "expired",
+        "revoked"
+      ]
+    },
+    "owner": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "projectBindingId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rootSessionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operatorScopeId": {
+          "type": "string",
+          "minLength": 32
+        },
+        "profileId": {
+          "const": "georesearch"
+        },
+        "requiredRole": {
+          "const": "literature"
+        }
+      },
+      "required": [
+        "projectBindingId",
+        "rootSessionId",
+        "operatorScopeId",
+        "profileId",
+        "requiredRole"
+      ]
+    },
+    "providerBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "providerId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "providerVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "continuationFormatDigest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "credentialRef": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "credentialBindingEpoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "providerId",
+        "providerVersion",
+        "continuationFormatDigest",
+        "credentialRef",
+        "credentialBindingEpoch"
+      ]
+    },
+    "encryptedUpstreamState": {
+      "type": "string",
+      "minLength": 1
+    },
+    "upstreamStateDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "expiresAt": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+    },
+    "createdAt": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+    },
+    "updatedAt": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+    },
+    "reservationEpoch": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "reservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "operationKey": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "requestDigest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "reservationEpoch": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fence": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "reservedAt": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+        },
+        "leaseExpiresAt": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+        }
+      },
+      "required": [
+        "operationKey",
+        "requestDigest",
+        "reservationEpoch",
+        "fence",
+        "reservedAt",
+        "leaseExpiresAt"
+      ]
+    },
+    "exactResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "providerItemId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "authors": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "orcid": {
+                      "oneOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "orcid"
+                  ]
+                }
+              },
+              "year": {
+                "oneOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "venue": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "doi": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "stableIdentifier": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceType": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "providerItemId",
+              "title",
+              "authors",
+              "year",
+              "venue",
+              "doi",
+              "stableIdentifier",
+              "sourceType",
+              "url"
+            ]
+          }
+        },
+        "completeness": {
+          "type": "string",
+          "enum": [
+            "complete",
+            "partial"
+          ]
+        },
+        "stopReason": {
+          "type": "string",
+          "enum": [
+            "result-limit",
+            "page-limit",
+            "rate-limited",
+            "timeout",
+            "cancelled",
+            "provider-failure",
+            "no-new-items"
+          ]
+        },
+        "continuationRef": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "continuationId": {
+              "type": "string",
+              "minLength": 32
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "expiresAt": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+            }
+          },
+          "required": [
+            "continuationId",
+            "generation",
+            "expiresAt"
+          ]
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string",
+                "minLength": 1
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ]
+          }
+        },
+        "providerTrace": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "providerId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "providerVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "retrievedAt": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+            },
+            "credentialRef": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "credentialBindingEpoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "requestId": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "providerId",
+            "providerVersion",
+            "retrievedAt",
+            "credentialRef",
+            "credentialBindingEpoch",
+            "requestId"
+          ]
+        },
+        "searchChainTrace": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "chainId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "requestDigest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            "pagesAdvancedTotal": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "uniqueItemsTotal": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "chainId",
+            "generation",
+            "requestDigest",
+            "pagesAdvancedTotal",
+            "uniqueItemsTotal"
+          ]
+        },
+        "trace": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pagesAdvanced": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "pagesAdvanced"
+          ]
+        }
+      },
+      "required": [
+        "items",
+        "completeness",
+        "warnings",
+        "providerTrace",
+        "searchChainTrace",
+        "trace"
+      ]
+    },
+    "exactResultDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "consumedOutcome": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "revocationCode": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "continuationIdDigest",
+    "chainId",
+    "generation",
+    "state",
+    "owner",
+    "providerBinding",
+    "encryptedUpstreamState",
+    "upstreamStateDigest",
+    "expiresAt",
+    "createdAt",
+    "updatedAt",
+    "reservationEpoch"
+  ]
+}

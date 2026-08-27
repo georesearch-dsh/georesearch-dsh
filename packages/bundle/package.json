@@ -1,0 +1,107 @@
+{
+  "name": "@georesearch/dsh-bundle",
+  "version": "0.1.0",
+  "description": "Managed GeoResearch host-plane bundle for DeepSeek Harness",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./phase1-probe": {
+      "types": "./lib/phase1-probe.d.ts",
+      "default": "./lib/phase1-probe.js"
+    },
+    "./phase2-probe": {
+      "types": "./lib/phase2-probe.d.ts",
+      "default": "./lib/phase2-probe.js"
+    },
+    "./phase25-probe": {
+      "types": "./lib/phase25-probe.d.ts",
+      "default": "./lib/phase25-probe.js"
+    },
+    "./phase3-probe": {
+      "types": "./lib/phase3-probe.d.ts",
+      "default": "./lib/phase3-probe.js"
+    },
+    "./phase4-probe": {
+      "types": "./lib/phase4-probe.d.ts",
+      "default": "./lib/phase4-probe.js"
+    },
+    "./phase5-probe": {
+      "types": "./lib/phase5-probe.d.ts",
+      "default": "./lib/phase5-probe.js"
+    },
+    "./phase6-probe": {
+      "types": "./lib/phase6-probe.d.ts",
+      "default": "./lib/phase6-probe.js"
+    },
+    "./standard-adapter": {
+      "types": "./lib/standard-adapter.d.ts",
+      "default": "./lib/standard-adapter.js"
+    },
+    "./standard-catalog": {
+      "types": "./lib/standard-catalog.d.ts",
+      "default": "./lib/standard-catalog.js"
+    },
+    "./standard-facet": {
+      "types": "./lib/standard-facet.d.ts",
+      "default": "./lib/standard-facet.js"
+    },
+    "./dsh-plugin.json": "./dsh-plugin.json",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": ["lib", "dsh-plugin.json", "cordis.patch.yml", "schemas", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsc -b && tsdown --config tsdown.standard.ts"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dependencies": {
+    "@georesearch/dsh-agent-lifecycle": "workspace:*",
+    "@georesearch/dsh-compat-rc5": "workspace:*",
+    "@georesearch/dsh-contracts": "workspace:*",
+    "@georesearch/dsh-delegation-tools": "workspace:*",
+    "@georesearch/dsh-evidence-providers": "workspace:*",
+    "@georesearch/dsh-evidence-service": "workspace:*",
+    "@georesearch/dsh-file-service": "workspace:*",
+    "@georesearch/dsh-geospatial-provider-python": "workspace:*",
+    "@georesearch/dsh-geospatial-service": "workspace:*",
+    "@georesearch/dsh-installation-guard": "workspace:*",
+    "@georesearch/dsh-policy": "workspace:*",
+    "@georesearch/dsh-project-provider-files": "workspace:*",
+    "@georesearch/dsh-project-service": "workspace:*",
+    "@georesearch/dsh-prompt": "workspace:*",
+    "@georesearch/dsh-repository-providers": "workspace:*",
+    "@georesearch/dsh-reproduction-service": "workspace:*",
+    "@georesearch/dsh-experiment-service": "workspace:*",
+    "@georesearch/dsh-validation-service": "workspace:*",
+    "@georesearch/dsh-claim-service": "workspace:*",
+    "@georesearch/dsh-writing-service": "workspace:*",
+    "@georesearch/dsh-run-service": "workspace:*",
+    "@georesearch/dsh-run-supervisor": "workspace:*",
+    "@georesearch/dsh-runtime-lease": "workspace:*"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "4.0.1",
+    "@deepseek-ai/dsh-agent": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-attachment": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-commands": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-llm": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-session": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-tool-ask-user": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-tools": "0.1.0-rc.5",
+    "@deepseek-ai/dsh-typert-protocol": "0.1.0-rc.5",
+    "@deepseek-ai/schemastery": "3.18.1"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,183 @@
+# GeoResearch host-plane bundle. The Web host composition does not own the
+# preset-scoped ask-user tool, so GeoResearch registers a global copy that role
+# restrictions can filter. Scoped preset copies intentionally shadow it.
+- insert:
+    - id: tool-ask-user
+      name: '@deepseek-ai/dsh-tool-ask-user'
+      disabled: false
+
+    # The guard is the first GeoResearch row; all later GeoResearch components
+    # inject its capability.
+    - id: georesearch-installation-guard
+      name: '@georesearch/dsh-installation-guard'
+      config:
+        pollIntervalMs: 1500
+
+    # Bootstrap the DSH Standard product adapter from this self-contained
+    # distribution after the installation guard. It discovers this package's
+    # static dsh-plugin.json and activates its FacetModule through the standard
+    # publication barrier.
+    - id: georesearch-dsh-standard-adapter
+      name: '@georesearch/dsh-bundle/standard-adapter'
+      config:
+        profileBaseUrl: !!js ctx.baseUrl
+
+    - id: georesearch-runtime-lease
+      name: '@georesearch/dsh-runtime-lease'
+
+    - id: georesearch-policy
+      name: '@georesearch/dsh-policy'
+      config:
+        strictCatalog: true
+        capabilityStage: phase6
+
+    - id: georesearch-project-service
+      name: '@georesearch/dsh-project-service'
+
+    - id: georesearch-file-service
+      name: '@georesearch/dsh-file-service'
+      config:
+        visionCredentialRef: DEEPSEEK_API_KEY
+        visionTimeoutMs: 120000
+        visionMaxOutputTokens: 4096
+
+    - id: georesearch-evidence-service
+      name: '@georesearch/dsh-evidence-service'
+      config:
+        credentialRef: !!js "process.env.GEORESEARCH_CROSSREF_CREDENTIAL_REF || null"
+
+    - id: georesearch-run-service
+      name: '@georesearch/dsh-run-service'
+      config:
+        testSpecs:
+          - schemaVersion: 1
+            testSpecId: georesearch-runtime-node-version
+            runner: smoke
+            argv:
+              - !!js process.execPath
+              - --version
+            cwdRelative: .
+            timeoutMs: 30000
+            graceMs: 1000
+            environment: {}
+
+    - id: georesearch-reproduction-service
+      name: '@georesearch/dsh-reproduction-service'
+
+    - id: georesearch-geospatial-service
+      name: '@georesearch/dsh-geospatial-service'
+
+    - id: georesearch-experiment-service
+      name: '@georesearch/dsh-experiment-service'
+
+    - id: georesearch-validation-service
+      name: '@georesearch/dsh-validation-service'
+
+    - id: georesearch-claim-service
+      name: '@georesearch/dsh-claim-service'
+
+    - id: georesearch-writing-service
+      name: '@georesearch/dsh-writing-service'
+
+    - id: georesearch-agent-lifecycle
+      name: '@georesearch/dsh-agent-lifecycle'
+
+    - id: georesearch-delegation-tools
+      name: '@georesearch/dsh-delegation-tools'
+      config:
+        strictRoleCapabilities: true
+        capabilityStage: phase6
+        specialistMaxTokens: 16384
+
+    # Disabled during normal operation. The installer enables this row with a
+    # report path for a bounded real-runtime Phase 1 gate probe.
+    - id: georesearch-phase1-probe
+      name: '@georesearch/dsh-bundle/phase1-probe'
+      disabled: !!js "!process.env.GEORESEARCH_PHASE1_PROBE_REPORT"
+      config:
+        reportPath: !!js process.env.GEORESEARCH_PHASE1_PROBE_REPORT
+
+    # Disabled during normal operation. Installer runtime verification enables
+    # both foundation and Phase 2 probes in the same bounded Harness boot.
+    - id: georesearch-phase2-probe
+      name: '@georesearch/dsh-bundle/phase2-probe'
+      disabled: !!js "!process.env.GEORESEARCH_PHASE2_PROBE_REPORT"
+      config:
+        reportPath: !!js process.env.GEORESEARCH_PHASE2_PROBE_REPORT
+
+    # Disabled during normal operation. This verifies the universal attachment
+    # service as a preserved foundation of the Phase 3 catalog.
+    - id: georesearch-phase25-probe
+      name: '@georesearch/dsh-bundle/phase25-probe'
+      disabled: !!js "!process.env.GEORESEARCH_PHASE25_PROBE_REPORT"
+      config:
+        reportPath: !!js process.env.GEORESEARCH_PHASE25_PROBE_REPORT
+
+    # Disabled during normal operation. The installer enables this row only for
+    # the bounded Phase 3 runtime activation probe.
+    - id: georesearch-phase3-probe
+      name: '@georesearch/dsh-bundle/phase3-probe'
+      disabled: !!js "!process.env.GEORESEARCH_PHASE3_PROBE_REPORT"
+      config:
+        reportPath: !!js process.env.GEORESEARCH_PHASE3_PROBE_REPORT
+
+    # Disabled during normal operation. This verifies the bounded read-only
+    # repository and reproduction workflow before an installation is committed.
+    - id: georesearch-phase4-probe
+      name: '@georesearch/dsh-bundle/phase4-probe'
+      disabled: !!js "!process.env.GEORESEARCH_PHASE4_PROBE_REPORT"
+      config:
+        reportPath: !!js process.env.GEORESEARCH_PHASE4_PROBE_REPORT
+
+    # Disabled during normal operation. Installer runtime verification enables
+    # this row for the Phase 5 geospatial and experiment protocol gate.
+    - id: georesearch-phase5-probe
+      name: '@georesearch/dsh-bundle/phase5-probe'
+      disabled: !!js "!process.env.GEORESEARCH_PHASE5_PROBE_REPORT"
+      config:
+        reportPath: !!js process.env.GEORESEARCH_PHASE5_PROBE_REPORT
+
+    # Disabled during normal operation. This verifies deterministic validation,
+    # Claim approval, WritingPacket isolation, and manuscript audit surfaces.
+    - id: georesearch-phase6-probe
+      name: '@georesearch/dsh-bundle/phase6-probe'
+      disabled: !!js "!process.env.GEORESEARCH_PHASE6_PROBE_REPORT"
+      config:
+        reportPath: !!js process.env.GEORESEARCH_PHASE6_PROBE_REPORT
+
+# The preset is stored in the shared user roster. The installer appends this
+# bundle only to integrated Web Profiles, so the default remains Profile-local
+# instead of becoming a cross-profile user setting.
+- id: agent-presets
+  config:
+    default: georesearch
+
+# Role-filtered tools must live in the global Tool layer. Harness rc.5
+# tools.restrict() intentionally cannot hide scope-local preset registrations.
+- id: tool-fs
+  disabled: false
+
+- id: tool-fs-search
+  disabled: false
+  config:
+    sampleOverCapGlobResults: false
+
+- id: tool-skill
+  disabled: false
+  config:
+    # Keep the stable first-request Skill catalog compact. Dynamic specialist
+    # tasks are delivered later through delegation_bootstrap.
+    catalogDescriptionMaxLength: 128
+
+- id: tool-web
+  disabled: false
+  config:
+    # Harness rc.5 does not provide a safe fetch provider by default. Keep the
+    # backed search tool visible and do not advertise an unusable fetch tool.
+    fetch: false
+    searchTimeoutMs: 60000
+
+# v1 has no telemetry-with-redaction mode. The row itself must be disabled;
+# mode: DISABLED is insufficient because it still provides ctx.sessionTelemetry.
+- id: session-telemetry-otel
+  disabled: true

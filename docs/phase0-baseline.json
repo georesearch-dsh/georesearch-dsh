@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-08-27T05:48:38.876Z",
+  "status": "verified",
+  "harness": {
+    "version": "0.1.0-rc.5",
+    "sourcePath": "D:\\DHS\\deepseek-harness-master",
+    "sourceIdentity": {
+      "kind": "github-source-archive",
+      "archivePath": "D:\\DHS\\source\\deepseek-harness-47f943859bef60e4160492346772ded9b24f765a.zip",
+      "verifiedSourcePath": "D:\\DHS\\source\\verified-harness-47f943859bef60e4160492346772ded9b24f765a\\deepseek-harness-47f943859bef60e4160492346772ded9b24f765a",
+      "archiveSha256": "sha256:cb275f9d775db13a3efdb90e6942438c9feb2096629197d253ccbd36f4a770db",
+      "sourceTreeDigest": "sha256:357c4d09536a5b07dc54c8d6d3f10f12015d8b2ce910fd9880bea8bb5e2a74ce",
+      "fileCount": 7412,
+      "localPatch": {
+        "id": "structured-output-bounded-recovery-and-array-limits-v1",
+        "manifestPath": "D:\\DHS\\georesearch-dsh\\docs\\harness-local-patch.json",
+        "manifestSha256": "sha256:b66cddd8e00e1ba086d9bddff0efdf21e8fa30332c82394ff8e753b0e8139d29",
+        "fileCount": 67
+      },
+      "localMirrorMatchesExpectedPatch": true,
+      "verifiedCommitOrArchive": true
+    },
+    "lockfileSha256": "sha256:6177ec61bdb8194eb5a606813a62ffb0ab2cc7fdfe2cd6e0249dcbfe4bce58e0",
+    "repository": "https://github.com/deepseek-ai/deepseek-harness",
+    "commit": "47f943859bef60e4160492346772ded9b24f765a",
+    "releaseCommit": "abe560f81edebe5f6a5b62706ff502daa0dccd40",
+    "gitTree": "f904efab9ef435201d6ba4da88a34d6366568272"
+  },
+  "cordis": {
+    "version": "4.0.1",
+    "vendoredSourceCommit": "56b3d4f725681cf4556c1a8695a709cc3b6eed74"
+  },
+  "runtime": {
+    "node": "v24.15.0",
+    "pnpm": "11.19.0",
+    "expectedPnpm": "11.7.0",
+    "platform": "win32"
+  },
+  "gate": {
+    "phase1EntryPassed": true,
+    "reason": "The official GitHub archive identity and the registered local Harness patch are verified."
+  }
+}

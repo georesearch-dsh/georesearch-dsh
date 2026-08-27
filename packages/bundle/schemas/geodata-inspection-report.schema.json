@@ -1,0 +1,568 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://georesearch.local/schemas/geodata-inspection-report.schema.json",
+  "title": "GeoResearch Geodata Inspection Report",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "reportId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceBindingVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "datasetId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "datasetName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "datasetVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "uri": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "provider": {
+          "type": "string",
+          "minLength": 1
+        },
+        "accessedAt": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "uri",
+        "provider",
+        "accessedAt"
+      ]
+    },
+    "actions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "raster-metadata",
+          "vector-metadata",
+          "crs",
+          "extent",
+          "alignment",
+          "nodata",
+          "band-schema",
+          "label-schema",
+          "split-summary"
+        ]
+      }
+    },
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "providerId": {
+          "const": "python-geospatial"
+        },
+        "providerVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "protocol": {
+          "const": "georesearch-worker/1"
+        },
+        "shell": {
+          "const": false
+        },
+        "persistentWorker": {
+          "const": true
+        },
+        "cancel": {
+          "const": true
+        },
+        "deadlines": {
+          "const": true
+        },
+        "methods": {
+          "type": "array",
+          "items": {
+            "const": "inspect-dataset"
+          }
+        },
+        "libraries": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "required": [
+        "providerId",
+        "providerVersion",
+        "protocol",
+        "shell",
+        "persistentWorker",
+        "cancel",
+        "deadlines",
+        "methods",
+        "libraries"
+      ]
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "artifactRef": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "artifactId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "artifactId",
+              "digest",
+              "kind"
+            ]
+          },
+          "format": {
+            "type": "string",
+            "minLength": 1
+          },
+          "width": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          },
+          "height": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          },
+          "featureCount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "spatialExtent": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "number"
+            }
+          },
+          "crs": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "authority": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              },
+              "wktDigest": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "axisOrder": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "units": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "authority",
+              "wktDigest",
+              "axisOrder",
+              "units"
+            ]
+          },
+          "resolution": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "number"
+            }
+          },
+          "transform": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "minItems": 6,
+            "maxItems": 6,
+            "items": {
+              "type": "number"
+            }
+          },
+          "bands": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "index": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "dataType": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "unit": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "minLength": 1
+                },
+                "scale": {
+                  "type": "number"
+                },
+                "offset": {
+                  "type": "number"
+                },
+                "noData": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "colorInterpretation": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "index",
+                "name",
+                "dataType",
+                "unit",
+                "scale",
+                "offset",
+                "noData",
+                "colorInterpretation"
+              ]
+            }
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "dataType": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "unit": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "minLength": 1
+                },
+                "nullable": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "name",
+                "dataType",
+                "unit",
+                "nullable"
+              ]
+            }
+          }
+        },
+        "required": [
+          "artifactRef",
+          "format",
+          "width",
+          "height",
+          "featureCount",
+          "spatialExtent",
+          "crs",
+          "resolution",
+          "transform",
+          "bands",
+          "fields"
+        ]
+      }
+    },
+    "splits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "splitId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "train",
+              "validation",
+              "test",
+              "holdout"
+            ]
+          },
+          "sampleIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "spatialUnitIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "sourceAssetDigests": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          },
+          "temporalKeys": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "splitId",
+          "role",
+          "sampleIds",
+          "spatialUnitIds",
+          "sourceAssetDigests",
+          "temporalKeys"
+        ]
+      }
+    },
+    "qualityMasks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "preprocessingLevel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "labelSchema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "value",
+          "label"
+        ]
+      }
+    },
+    "knownLimitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "checkId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+          },
+          "domain": {
+            "type": "string",
+            "enum": [
+              "common-gis",
+              "optical",
+              "geospatial-ml",
+              "spatial-statistics"
+            ]
+          },
+          "mandatory": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "passed",
+              "failed",
+              "blocked",
+              "not-applicable"
+            ]
+          },
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relatedArtifactIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "checkId",
+          "domain",
+          "mandatory",
+          "status",
+          "code",
+          "message",
+          "relatedArtifactIds"
+        ]
+      }
+    },
+    "overall": {
+      "type": "string",
+      "enum": [
+        "passed",
+        "failed",
+        "blocked"
+      ]
+    },
+    "inspectedAt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "reportId",
+    "projectId",
+    "workspaceId",
+    "workspaceBindingVersion",
+    "datasetId",
+    "datasetName",
+    "datasetVersion",
+    "source",
+    "actions",
+    "provider",
+    "assets",
+    "splits",
+    "qualityMasks",
+    "preprocessingLevel",
+    "labelSchema",
+    "knownLimitations",
+    "checks",
+    "overall",
+    "inspectedAt",
+    "digest"
+  ]
+}
