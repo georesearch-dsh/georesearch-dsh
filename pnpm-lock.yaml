@@ -98,9 +98,87 @@ importers:
       '@dsh-std/tool':
         specifier: 0.1.1-rc.1
         version: 0.1.1-rc.1
+      '@georesearch/dsh-agent-lifecycle':
+        specifier: workspace:*
+        version: link:packages/agent-lifecycle
+      '@georesearch/dsh-bundle':
+        specifier: workspace:*
+        version: link:packages/bundle
+      '@georesearch/dsh-claim-service':
+        specifier: workspace:*
+        version: link:packages/claim-service
+      '@georesearch/dsh-compat-rc5':
+        specifier: workspace:*
+        version: link:packages/compatibility
       '@georesearch/dsh-contracts':
         specifier: workspace:*
         version: link:packages/contracts
+      '@georesearch/dsh-delegation-tools':
+        specifier: workspace:*
+        version: link:packages/delegation-tools
+      '@georesearch/dsh-evidence-providers':
+        specifier: workspace:*
+        version: link:packages/evidence-providers
+      '@georesearch/dsh-evidence-service':
+        specifier: workspace:*
+        version: link:packages/evidence-service
+      '@georesearch/dsh-experiment-service':
+        specifier: workspace:*
+        version: link:packages/experiment-service
+      '@georesearch/dsh-file-service':
+        specifier: workspace:*
+        version: link:packages/file-service
+      '@georesearch/dsh-geospatial-provider-python':
+        specifier: workspace:*
+        version: link:packages/geospatial-provider-python
+      '@georesearch/dsh-geospatial-service':
+        specifier: workspace:*
+        version: link:packages/geospatial-service
+      '@georesearch/dsh-installation-guard':
+        specifier: workspace:*
+        version: link:packages/installation-guard
+      '@georesearch/dsh-installer':
+        specifier: workspace:*
+        version: link:packages/installer
+      '@georesearch/dsh-policy':
+        specifier: workspace:*
+        version: link:packages/policy-service
+      '@georesearch/dsh-project-provider-files':
+        specifier: workspace:*
+        version: link:packages/project-provider-files
+      '@georesearch/dsh-project-service':
+        specifier: workspace:*
+        version: link:packages/project-service
+      '@georesearch/dsh-prompt':
+        specifier: workspace:*
+        version: link:packages/prompt
+      '@georesearch/dsh-provider-lifecycle':
+        specifier: workspace:*
+        version: link:packages/provider-lifecycle
+      '@georesearch/dsh-repository-providers':
+        specifier: workspace:*
+        version: link:packages/repository-providers
+      '@georesearch/dsh-reproduction-service':
+        specifier: workspace:*
+        version: link:packages/reproduction-service
+      '@georesearch/dsh-run-service':
+        specifier: workspace:*
+        version: link:packages/run-service
+      '@georesearch/dsh-run-supervisor':
+        specifier: workspace:*
+        version: link:packages/run-supervisor
+      '@georesearch/dsh-runtime-lease':
+        specifier: workspace:*
+        version: link:packages/runtime-lease
+      '@georesearch/dsh-validation-service':
+        specifier: workspace:*
+        version: link:packages/validation-service
+      '@georesearch/dsh-writing-service':
+        specifier: workspace:*
+        version: link:packages/writing-service
+      '@napi-rs/canvas':
+        specifier: 1.0.6
+        version: 1.0.6
       '@types/bmp-js':
         specifier: 0.1.2
         version: 0.1.2
@@ -131,12 +209,18 @@ importers:
       lucide-react:
         specifier: ^0.468.0
         version: 0.468.0(react@.dsh+profiles+node_modules+react)
+      publint:
+        specifier: 0.3.24
+        version: 0.3.24
       react:
         specifier: link:../.dsh/profiles/node_modules/react
         version: link:../.dsh/profiles/node_modules/react
+      tar-stream:
+        specifier: ^3.1.7
+        version: 3.2.0
       tsdown:
         specifier: ^0.22.2
-        version: 0.22.14(tsx@4.23.12)(typescript@6.0.3)
+        version: 0.22.14(publint@0.3.24)(tsx@4.23.12)(typescript@6.0.3)
       tsx:
         specifier: ^4.22.4
         version: 4.23.12
@@ -416,11 +500,15 @@ importers:
         specifier: 1.0.4
         version: 1.0.4
       xlsx:
-        specifier: 0.18.5
-        version: 0.18.5
+        specifier: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
+        version: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
       yauzl:
         specifier: ^3.2.0
         version: 3.4.0
+    devDependencies:
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
 
   packages/geospatial-provider-python:
     dependencies:
@@ -1071,6 +1159,10 @@ packages:
   '@oxc-project/types@0.144.0':
     resolution: {integrity: sha512-nuhZIOLuI6TFQ32I/WnUx+SCPY7SdSKwgnFHydAuoS1+Z4BRcaP+RRJmGzl9lw+0OFF7UmaESf7KQRXaNLHypg==}
 
+  '@publint/pack@0.1.7':
+    resolution: {integrity: sha512-4EDEmvxWtgsCnnVeBvtFIFZtUhPPt1+bA9JrSwU4Sa//6oKtzCSlGGXYJr44OD9aGISymbieJ4mCKHUygUDU+g==}
+    engines: {node: '>=18'}
+
   '@quansync/fs@1.0.0':
     resolution: {integrity: sha512-4TJ3DFtlf1L5LDMaM6CanJ/0lckGNtJcMjQ1NAV6zDmA0tEHKZtxNKin8EgPaVX1YzljbxckyT2tJrpQKAtngQ==}
 
@@ -1451,10 +1543,6 @@ packages:
     resolution: {integrity: sha512-NUPRluOfOiTKBKvWPtSD4PhFvWCqOi0BGStNWs57X9js7XGTprSmFoz5F0tWhR4WPjNeR9jXqdC7/UpSJTnlRg==}
     engines: {node: '>=18'}
 
-  codepage@1.15.0:
-    resolution: {integrity: sha512-3g6NUTPd/YtuuGrhMnOMRjFc+LJw/bnMp3+0r/Wcz3IXUuCosKRJvMphm5+Q+bvTVGcJJuRvVLuYba+WojaFaA==}
-    engines: {node: '>=0.8'}
-
   codepage@1.3.8:
     resolution: {integrity: sha512-cjAoQW5L/TCKWRbzt/xGBvhwJKQFhcIVO0jWQtpKQx4gr9qvXNkpRfq6gSmjjA8dB2Is/DPOb7gNwqQXP7UgTQ==}
     engines: {node: '>=0.8'}
@@ -1531,10 +1619,6 @@ packages:
     peerDependenciesMeta:
       picomatch:
         optional: true
-
-  frac@1.1.2:
-    resolution: {integrity: sha512-w/XBfkibaTl3YDqASwfDUqkna4Z2p9cFSr1aHDt0WoMTECnRfBOv2WArlZILlqgWlmdIlALXGpM2AOhEk5W3IA==}
-    engines: {node: '>=0.8'}
 
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
@@ -1681,6 +1765,10 @@ packages:
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
 
+  mri@1.2.0:
+    resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
+    engines: {node: '>=4'}
+
   nanoid@3.3.18:
     resolution: {integrity: sha512-DTg4MJbGMWkfi6VZFdNt2/caMbQy4Ou+Op/hJQvGEWcnVfoA1QA+xzRKAzw9jD6+GVOOeYr/mIcuDSdug6F6+w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -1705,6 +1793,9 @@ packages:
   opencollective-postinstall@2.0.3:
     resolution: {integrity: sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q==}
     hasBin: true
+
+  package-manager-detector@1.8.0:
+    resolution: {integrity: sha512-yQA4H19AmPEoMUeavPMDIe1higySl/gH/yaQrkT/s07Qp+7pp2hYz30N3z2l5BkjVkF9Ow6o0wjJamm2y7Sn0A==}
 
   pako@1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
@@ -1733,6 +1824,11 @@ packages:
   ppt-to-text@1.0.1:
     resolution: {integrity: sha512-ClsUchEoSxoITjCitaYEfA+0iW6hajK6wnefEmzVvW7+KAH3/6Nmhe6rOkUOPxCKhy+97co/y53ub0yUESCoyA==}
     engines: {node: '>=0.8'}
+    hasBin: true
+
+  publint@0.3.24:
+    resolution: {integrity: sha512-9zS56KrKBoqi5Qt8h92uMP8TTM9AYZSgnmCo4u2priMqkOZvQnTsziZ2p5LJ2ywbYkAjoCDp2jda9u4cgFefIw==}
+    engines: {node: '>=18'}
     hasBin: true
 
   quansync@1.0.0:
@@ -1776,6 +1872,10 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
+  sade@1.8.1:
+    resolution: {integrity: sha512-xal3CZX1Xlo/k4ApwCFrHVACi9fBqJ7V+mwhBsuf/1IOKbBy098Fex+Wa/5QMubw09pSZ/u8EY8PWgevJsXp1A==}
+    engines: {node: '>=6'}
+
   safe-buffer@5.2.1:
     resolution: {integrity: sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==}
 
@@ -1793,10 +1893,6 @@ packages:
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
-
-  ssf@0.11.2:
-    resolution: {integrity: sha512-+idbmIXoYET47hH+d7dfm2epdOMUDjqcB4648sTZ+t2JwoyBFL/insLfB/racrDmsKB3diwsDA696pZMieAC5g==}
-    engines: {node: '>=0.8'}
 
   stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
@@ -2012,19 +2108,12 @@ packages:
     engines: {node: '>=8'}
     hasBin: true
 
-  wmf@1.0.2:
-    resolution: {integrity: sha512-/p9K7bEh0Dj6WbXg4JG0xvLQmIadrner1bi45VMJTfnbVHsc7yIajZyoSoK60/dtVBs12Fm6WkUI5/3WAVsNMw==}
-    engines: {node: '>=0.8'}
-
   word-extractor@1.0.4:
     resolution: {integrity: sha512-PyAGZQ2gjnVA5kcZAOAxoYciCMaAvu0dbVlw/zxHphhy+3be8cDeYKHJPO8iedIM3Sx0arA/ugKTJyXhZNgo6g==}
 
-  word@0.3.0:
-    resolution: {integrity: sha512-OELeY0Q61OXpdUfTp+oweA/vtLVg5VDOXh+3he3PNzLGG/y0oylSOC1xRVj0+l4vQ3tj/bB1HVHv1ocXkQceFA==}
-    engines: {node: '>=0.8'}
-
-  xlsx@0.18.5:
-    resolution: {integrity: sha512-dmg3LCjBPHZnQp5/F/+nnTa+miPJxUXB6vtk42YjBBKayDNagxGEeIdWApkYPOf3Z3pm3k62Knjzp7lMeTEtFQ==}
+  xlsx@https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz:
+    resolution: {integrity: sha512-oLDq3jw7AcLqKWH2AhCpVTZl8mf6X2YReP+Neh0SJUzV/BdZYjth94tG5toiMB1PPrYtxOCfaoUCkvtuH+3AJA==, tarball: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz}
+    version: 0.20.3
     engines: {node: '>=0.8'}
     hasBin: true
 
@@ -2341,6 +2430,10 @@ snapshots:
 
   '@oxc-project/types@0.144.0': {}
 
+  '@publint/pack@0.1.7':
+    dependencies:
+      tinyexec: 1.3.0
+
   '@quansync/fs@1.0.0':
     dependencies:
       quansync: 1.0.0
@@ -2598,8 +2691,6 @@ snapshots:
 
   chai@6.2.2: {}
 
-  codepage@1.15.0: {}
-
   codepage@1.3.8:
     dependencies:
       commander: 15.0.0
@@ -2681,8 +2772,6 @@ snapshots:
   fdir@6.5.0(picomatch@4.0.5):
     optionalDependencies:
       picomatch: 4.0.5
-
-  frac@1.1.2: {}
 
   fsevents@2.3.3:
     optional: true
@@ -2811,6 +2900,8 @@ snapshots:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
 
+  mri@1.2.0: {}
+
   nanoid@3.3.18: {}
 
   netcdfjs@4.0.0:
@@ -2824,6 +2915,8 @@ snapshots:
   obug@2.1.4: {}
 
   opencollective-postinstall@2.0.3: {}
+
+  package-manager-detector@1.8.0: {}
 
   pako@1.0.11: {}
 
@@ -2850,6 +2943,13 @@ snapshots:
       cfb: 1.2.2
       codepage: 1.3.8
       commander: 15.0.0
+
+  publint@0.3.24:
+    dependencies:
+      '@publint/pack': 0.1.7
+      package-manager-detector: 1.8.0
+      picocolors: 1.1.1
+      sade: 1.8.1
 
   quansync@1.0.0: {}
 
@@ -2901,6 +3001,10 @@ snapshots:
       '@rolldown/binding-win32-arm64-msvc': 1.2.4
       '@rolldown/binding-win32-x64-msvc': 1.2.4
 
+  sade@1.8.1:
+    dependencies:
+      mri: 1.2.0
+
   safe-buffer@5.2.1: {}
 
   saxes@5.0.1:
@@ -2914,10 +3018,6 @@ snapshots:
   siginfo@2.0.0: {}
 
   source-map-js@1.2.1: {}
-
-  ssf@0.11.2:
-    dependencies:
-      frac: 1.1.2
 
   stackback@0.0.2: {}
 
@@ -2991,7 +3091,7 @@ snapshots:
 
   tree-kill@1.2.2: {}
 
-  tsdown@0.22.14(tsx@4.23.12)(typescript@6.0.3):
+  tsdown@0.22.14(publint@0.3.24)(tsx@4.23.12)(typescript@6.0.3):
     dependencies:
       ansis: 4.3.1
       cac: 7.0.0
@@ -3009,6 +3109,7 @@ snapshots:
       unconfig-core: 7.5.0
       verkit: 0.3.2
     optionalDependencies:
+      publint: 0.3.24
       tsx: 4.23.12
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -3109,24 +3210,12 @@ snapshots:
       siginfo: 2.0.0
       stackback: 0.0.2
 
-  wmf@1.0.2: {}
-
   word-extractor@1.0.4:
     dependencies:
       saxes: 5.0.1
       yauzl: 2.10.0
 
-  word@0.3.0: {}
-
-  xlsx@0.18.5:
-    dependencies:
-      adler-32: 1.3.1
-      cfb: 1.2.2
-      codepage: 1.15.0
-      crc-32: 1.2.2
-      ssf: 0.11.2
-      wmf: 1.0.2
-      word: 0.3.0
+  xlsx@https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz: {}
 
   xmlchars@2.2.0: {}
 

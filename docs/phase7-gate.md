@@ -7,10 +7,26 @@ case; neither substitutes for the other.
 ## Commands
 
 ```powershell
-pnpm install --frozen-lockfile
+pnpm run release:gate
+```
+
+`release:gate` is the complete non-publishing release-candidate gate. It requires
+a clean Git worktree and the interactive Windows user context that owns
+`DSH_HOME`. It prepares the pinned pnpm shim, installs the frozen lockfile,
+audits production dependencies, runs `phase7:gate`, verifies DSH Standard
+conformance, refreshes `probe:phase7-live`, and runs `release:check`. The final
+check applies publint and `npm publish --dry-run` to all 26 tarballs, verifies
+current live evidence and package order, and writes
+`dist/release/release-manifest.json` and `dist/release/SHA256SUMS`. It never
+publishes or uploads a package.
+
+For focused diagnosis, the deterministic and public components remain
+independently runnable:
+
+```powershell
 pnpm run phase7:gate
-$env:DSH_TELEMETRY_DISABLED = '1'
 pnpm run probe:phase7-live
+pnpm run release:check
 ```
 
 `phase7:gate` reruns the complete Phase 1 through Phase 6 chain, builds and packs
@@ -86,12 +102,14 @@ or live-probe invariants drift.
 
 The following values are a dated deployment snapshot, not proof for the
 current source tree. Current release acceptance requires fresh successful
-`phase7:gate`, `pack`, and, when public activation is being claimed,
-`probe:phase7-live` outputs.
+`release:gate` output; its final `release:check` rejects a dirty Git worktree,
+stale public evidence, package lint warnings, or a failed npm publication dry
+run.
 
-The final Windows release run completed on 2026-08-21 (Asia/Shanghai) with 63
-test files and 297 tests passing. The distribution contained 26 package
-tarballs, 35 isolated package imports, 34 bundle schemas, the clean-home
+The latest Windows release-candidate run completed on 2026-08-28
+(Asia/Shanghai) with 70 test files and 390 tests passing. The distribution
+contained 26 package tarballs, 38 isolated package imports, 34 bundle schemas,
+the clean-home
 installer case, Windows DPAPI coverage, and both TypeScript and Python
 scientific golden suites. All 44 Phase 7 release criteria passed, including the
 automatic DeepSeek visual-understanding boundary.
@@ -110,8 +128,8 @@ red square. The request completed with 303 prompt tokens and 25 completion
 tokens. This network smoke supplements the deterministic mocked API boundary;
 it is not required for offline release-gate reproducibility.
 
-The final public end-to-end run completed at `2026-08-18T18:19:15.573Z`
-(`2026-08-19 02:19:15` Asia/Shanghai). All 17 business checks and all seven
+The latest public end-to-end run completed at `2026-08-28T04:11:49.314Z`
+(`2026-08-28 12:11:49` Asia/Shanghai). All 17 business checks and all seven
 Provider lifecycle checks passed, including real-current-user Windows DPAPI,
 and the temporary public-test state was removed.
 

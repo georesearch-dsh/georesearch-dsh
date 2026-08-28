@@ -3,6 +3,8 @@ import { resolve } from 'node:path'
 
 const lib = resolve(import.meta.dirname, '..', 'packages', 'file-service', 'lib')
 const exactFiles = new Set([
+  'client.cjs',
+  'client.cjs.map',
   'client.js',
   'client.js.map',
   'index.js',

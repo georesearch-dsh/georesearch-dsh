@@ -103,5 +103,17 @@
   "engines": {
     "node": "^22.19.0 || >=24.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LYP-PYL/georesearch-dsh.git"
+  },
+  "homepage": "https://github.com/LYP-PYL/georesearch-dsh#readme",
+  "bugs": {
+    "url": "https://github.com/LYP-PYL/georesearch-dsh/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "license": "MIT"
 }

@@ -109,7 +109,7 @@ if (fileManifest.exports?.['./client'] === undefined
   || fileManifest.peerDependencies?.['@deepseek-ai/dsh-credentials'] !== '0.1.0-rc.5') {
   throw new Error('file-service client entry is not declared for the Harness Web client')
 }
-const clientBundle = await stat(resolve(root, 'packages', 'file-service', 'lib', 'client.js'))
+const clientBundle = await stat(resolve(root, 'packages', 'file-service', 'lib', 'client.cjs'))
 if (!clientBundle.isFile() || clientBundle.size < 1 || clientBundle.size > 128 * 1024) {
   throw new Error(`file-service client bundle size is invalid: ${clientBundle.size}`)
 }

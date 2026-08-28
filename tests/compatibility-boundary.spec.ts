@@ -38,7 +38,7 @@ describe('compatibility adapter boundary', () => {
   })
 
   it('keeps rc.5 platform UI identities external in the generated client bundle', async () => {
-    const bundle = await readFile(join(packagesRoot, 'file-service', 'lib', 'client.js'), 'utf8')
+    const bundle = await readFile(join(packagesRoot, 'file-service', 'lib', 'client.cjs'), 'utf8')
     const harnessRequires = [...new Set(
       [...bundle.matchAll(/require\("(@deepseek-ai\/[^"\r\n]+)"\)/gu)].map(match => match[1]),
     )].sort()

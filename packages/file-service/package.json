@@ -12,7 +12,7 @@
     },
     "./client": {
       "types": "./lib/types/client/index.d.ts",
-      "default": "./lib/client.js"
+      "default": "./lib/client.cjs"
     },
     "./pdf": {
       "types": "./lib/pdf.d.ts",
@@ -63,8 +63,11 @@
     "tesseract.js-core": "7.0.0",
     "utif2": "4.1.0",
     "word-extractor": "1.0.4",
-    "xlsx": "0.18.5",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
     "yauzl": "^3.2.0"
+  },
+  "devDependencies": {
+    "react": "18.3.1"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "4.0.1",
@@ -84,6 +87,18 @@
   },
   "engines": {
     "node": "^22.19.0 || >=24.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LYP-PYL/georesearch-dsh.git"
+  },
+  "homepage": "https://github.com/LYP-PYL/georesearch-dsh#readme",
+  "bugs": {
+    "url": "https://github.com/LYP-PYL/georesearch-dsh/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "license": "MIT"
 }

@@ -10,16 +10,21 @@ const rootManifest = await readJson(join(root, 'package.json')) as {
   readonly packageManager: string
   readonly engines: { readonly node: string }
   readonly scripts: Readonly<Record<string, string>>
+  readonly devDependencies?: Readonly<Record<string, string>>
 }
 
 const requiredScripts = {
+  'audit:prod': 'pnpm audit --prod --audit-level high',
+  'release:preflight': 'node --experimental-strip-types scripts/verify-release-environment.ts && pnpm run probe:dpapi',
+  'release:check': 'node --experimental-strip-types scripts/verify-release-readiness.ts',
+  'release:gate': 'powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-release-gate.ps1',
   'probe:phase7-live': 'node --experimental-strip-types scripts/probe-phase7-live.ts',
   'test:tarball-clean-home': 'vitest run packages/installer/tests/tarball-clean-home.spec.ts',
   'test:windows-release': 'vitest run packages/installer/tests/preflight.spec.ts packages/project-provider-files/tests/win32-native.spec.ts packages/installation-guard/tests/nonce-protection.spec.ts && pnpm run probe:dpapi',
   'test:scientific-golden': 'vitest run tests/scientific-golden.spec.ts && python -m unittest discover -s python/tests -p test_scientific_golden.py',
   'phase7:release-tests': 'pnpm run test:tarball-clean-home && pnpm run test:windows-release && pnpm run test:scientific-golden',
   'phase7:boundary': 'node --experimental-strip-types scripts/verify-phase7-boundary.ts',
-  'phase7:gate': 'pnpm run phase6:gate && pnpm run phase7:release-tests && pnpm run phase7:boundary',
+  'phase7:gate': 'pnpm run release:preflight && pnpm run phase6:gate && pnpm run phase7:release-tests && pnpm run phase7:boundary',
 } as const
 for (const [name, command] of Object.entries(requiredScripts)) {
   if (rootManifest.scripts[name] !== command) throw new Error(`Phase 7 script is missing or changed: ${name}`)
@@ -97,6 +102,9 @@ const packageDirectories = (await readdir(join(root, 'packages'), { withFileType
   .map(entry => entry.name)
   .sort()
 const packageNames: string[] = []
+const expectedRepository = 'git+https://github.com/LYP-PYL/georesearch-dsh.git'
+const expectedHomepage = 'https://github.com/LYP-PYL/georesearch-dsh#readme'
+const expectedBugs = 'https://github.com/LYP-PYL/georesearch-dsh/issues'
 for (const directory of packageDirectories) {
   const manifestPath = join(root, 'packages', directory, 'package.json')
   await access(manifestPath)
@@ -104,12 +112,28 @@ for (const directory of packageDirectories) {
     readonly name: string
     readonly version: string
     readonly engines?: { readonly node?: string }
+    readonly repository?: { readonly url?: string }
+    readonly homepage?: string
+    readonly bugs?: { readonly url?: string }
+    readonly publishConfig?: { readonly access?: string; readonly registry?: string }
   }
   if (manifest.version !== rootManifest.version) throw new Error(`package version drift: ${manifest.name}`)
   if (manifest.engines?.node !== undefined && manifest.engines.node !== rootManifest.engines.node) {
     throw new Error(`Node engine drift: ${manifest.name}`)
   }
+  if (manifest.repository?.url !== expectedRepository
+    || manifest.homepage !== expectedHomepage
+    || manifest.bugs?.url !== expectedBugs
+    || manifest.publishConfig?.access !== 'public'
+    || manifest.publishConfig.registry !== 'https://registry.npmjs.org/') {
+    throw new Error(`npm publication metadata is incomplete: ${manifest.name}`)
+  }
   packageNames.push(manifest.name)
+}
+for (const packageName of packageNames) {
+  if (rootManifest.devDependencies?.[packageName] !== 'workspace:*') {
+    throw new Error(`release workspace does not declare ${packageName}`)
+  }
 }
 
 const lockfile = await readFile(join(root, 'pnpm-lock.yaml'), 'utf8')
@@ -246,7 +270,7 @@ for (const token of [
 ]) {
   if (!documentation.compatibility.includes(token)) throw new Error(`compatibility matrix omits ${token}`)
 }
-for (const token of ['phase7:gate', 'probe:phase7-live', '44 release criteria']) {
+for (const token of ['release:gate', 'release:check', 'phase7:gate', 'probe:phase7-live', '44 release criteria']) {
   if (!documentation.gate.includes(token)) throw new Error(`Phase 7 gate document omits ${token}`)
 }
 for (const token of [

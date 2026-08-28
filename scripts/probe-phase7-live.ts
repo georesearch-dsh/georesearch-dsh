@@ -53,6 +53,7 @@ process.env.DSH_TELEMETRY_DISABLED = '1'
 
 const root = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const reportPath = join(root, 'dist', 'reports', 'phase7-live-e2e.json')
+const releaseIdentity = await loadReleaseIdentity()
 const repositoryUrl = 'https://github.com/rasterio/rasterio.git'
 const repositoryTag = '1.4.3'
 const rasterUrl = `https://raw.githubusercontent.com/rasterio/rasterio/${repositoryTag}/tests/data/RGB.byte.tif`
@@ -638,9 +639,10 @@ try {
   const finalProject = await projects.loadProject(projectId)
   const documentationRelease = /Release\s+([0-9.]+)/u.exec(documentationPage.text)?.[1] ?? null
   liveReport = {
-    schemaVersion: 1,
+    schemaVersion: 2,
     phase: 'phase7-public-remote-sensing-e2e',
     checkedAt: nowUtc(),
+    releaseIdentity,
     environment: {
       platform: process.platform,
       node: process.version,
@@ -826,6 +828,55 @@ process.stdout.write(`${JSON.stringify({
   checks: finalReport.checks,
   lifecycle: finalReport.lifecycle,
 }, undefined, 2)}\n`)
+
+async function loadReleaseIdentity(): Promise<{
+  readonly productVersion: string
+  readonly distributionCreatedAt: string
+  readonly distributionManifestSha256: Sha256Digest
+  readonly harnessVersion: string
+  readonly harnessCommit: string
+  readonly harnessPatchId: string
+  readonly harnessPatchManifestSha256: Sha256Digest
+}> {
+  const [rootManifest, releaseMetadata, baseline, distributionManifestBytes] = await Promise.all([
+    readFile(join(root, 'package.json'), 'utf8').then(value => JSON.parse(value) as { readonly version: string }),
+    readFile(join(root, 'release-metadata.json'), 'utf8').then(value => JSON.parse(value) as {
+      readonly productVersion: string
+      readonly createdAt: string
+    }),
+    readFile(join(root, 'docs', 'phase0-baseline.json'), 'utf8').then(value => JSON.parse(value) as {
+      readonly harness: {
+        readonly version: string
+        readonly commit: string
+        readonly sourceIdentity: {
+          readonly localPatch: {
+            readonly id: string
+            readonly manifestSha256: Sha256Digest
+          }
+        }
+      }
+    }),
+    readFile(join(root, 'dist', 'distribution', 'distribution-manifest.json')),
+  ])
+  const distributionManifest = JSON.parse(distributionManifestBytes.toString('utf8')) as {
+    readonly productVersion: string
+    readonly createdAt: string
+  }
+  if (rootManifest.version !== releaseMetadata.productVersion
+    || distributionManifest.productVersion !== releaseMetadata.productVersion
+    || distributionManifest.createdAt !== releaseMetadata.createdAt) {
+    throw new Error('Phase 7 live probe release identity is inconsistent')
+  }
+  return {
+    productVersion: rootManifest.version,
+    distributionCreatedAt: releaseMetadata.createdAt,
+    distributionManifestSha256: sha256Bytes(distributionManifestBytes),
+    harnessVersion: baseline.harness.version,
+    harnessCommit: baseline.harness.commit,
+    harnessPatchId: baseline.harness.sourceIdentity.localPatch.id,
+    harnessPatchManifestSha256: baseline.harness.sourceIdentity.localPatch.manifestSha256,
+  }
+}
 
 function publicDocumentationProvider(): LiteratureProvider {
   let disposed = false

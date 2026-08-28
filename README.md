@@ -107,11 +107,23 @@ kinds.
 ```powershell
 pnpm install
 pnpm run build
-pnpm dsh-std:check
+pnpm run dsh-std:check
 pnpm run phase7:gate
-pnpm run probe:phase7-live
 node packages/installer/lib/cli.js install --dsh-home <dsh-home> --distribution-dir dist\distribution --harness-root <harness-root>
 ```
+
+Run the complete release-candidate verification only from a clean Git worktree
+in the interactive Windows user context that owns `DSH_HOME`:
+
+```powershell
+pnpm run release:gate
+```
+
+That command prepares the pinned pnpm shim, installs the frozen lockfile,
+audits production dependencies, runs the deterministic Phase 7 gate, verifies
+DSH Standard conformance, refreshes the public Phase 7 evidence, runs publint
+and `npm publish --dry-run` for all 26 packages, and writes the release manifest
+and checksums. It does not publish or upload any package.
 
 `dist/distribution` and `dist/tarballs` are generated release evidence, not
 source authority. A publishable set exists only after the current workspace

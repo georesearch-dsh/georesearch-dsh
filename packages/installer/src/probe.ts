@@ -275,7 +275,7 @@ export async function verifyCandidateShape(
   }
   const fileServiceRoot = distribution.packageDirectories.get('@georesearch/dsh-file-service')
   if (fileServiceRoot === undefined) throw new Error('file service package directory is unavailable')
-  await readFile(join(fileServiceRoot, 'lib', 'client.js'))
+  await readFile(join(fileServiceRoot, 'lib', 'client.cjs'))
   const fileServiceHost = await readFile(join(fileServiceRoot, 'lib', 'index.js'), 'utf8')
   if (/from\s+['"](?:tar-stream|yauzl)['"]/u.test(fileServiceHost)) {
     throw new Error('file-service Host bundle retained an external archive parser import')

@@ -39,13 +39,19 @@ workspace link, or separate `--distribution-dir` is required.
 ## Local Release Candidate
 
 ```powershell
-pnpm install --frozen-lockfile
-pnpm run phase7:gate
+pnpm run release:gate
 node packages/installer/lib/cli.js install `
   --dsh-home D:\path\to\.dsh `
   --distribution-dir dist\distribution `
   --harness-root D:\path\to\deepseek-harness
 ```
+
+Run `release:gate` from a clean Git worktree in the interactive Windows user
+context that owns `DSH_HOME`. It pins pnpm, verifies the frozen dependency tree,
+audits production dependencies, runs the deterministic and public Phase 7
+checks, validates all package manifests and tarballs with publint and
+`npm publish --dry-run`, and writes `dist\release\release-manifest.json` plus
+`dist\release\SHA256SUMS`. The command never publishes a package.
 
 After installation, start an existing Web Profile or the managed diagnostic
 Profile:
