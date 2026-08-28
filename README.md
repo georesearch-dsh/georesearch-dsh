@@ -1,168 +1,242 @@
 # GeoResearch for DeepSeek Harness
 
-Out-of-tree GeoResearch plugin workspace targeting DeepSeek Harness `0.1.0-rc.5`
-and Cordis `4.0.1`.
+English | [中文](README.zh.md)
 
-The release package also exposes a DSH Standard Community v0.15 component
-boundary. A package-root `dsh-plugin.json` is activated through an embedded,
-pinned `@dsh-std/adapter-dsh` product adapter; the standard facet owns the
-existing GeoResearch tool surface without changing its rc.5 role, approval,
-sandbox, or scientific-authority behavior. See
-`docs/dsh-standard-conformance.md` for the exact claims and non-claims.
+GeoResearch is an evidence-grounded scientific research agent plugin for
+[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness). It turns a
+research question, a set of papers, source repositories, and scientific data
+into a persistent, auditable workflow for literature review, reproduction,
+geospatial experiments, validation, and manuscript preparation.
 
-This repository implements the complete Phase 1 through Phase 7 GeoResearch
-product: the managed plugin foundation, Project/Run core, universal attachment
-layer, Literature/Evidence workflow, Repository/Reproduction workflow,
-Geospatial/Experiment workflow, Validation/Claim/Writing authority chain, and
-the release gates. In addition to compatibility, installation, role,
-delegation, Preset/Skill, lifecycle, and Python worker probes, it includes authoritative Workspace
-bindings, persistent Project state and operations, a content-addressed Artifact
-Store, Project tools, a sandboxed Run Service, a restart-aware Run Supervisor
-with persisted terminal reconciliation and fail-closed orphan handling, mixed
-multi-file full-page upload, safe archive inspection,
-path-free Agent attachment references, bounded PDF text/page-image reading,
-modern and legacy Office/OpenDocument/EPUB extraction, Jupyter Notebook
-normalization, SQLite/HDF5/NetCDF/Parquet schema and bounded sample reading,
-TIFF/BMP image transcoding, automatic semantic image/PDF-page/document-image
-analysis through `deepseek-v4-flash-vision-exp`, credential-safe native/OCR
-fallbacks, an Agent-scoped workspace `read_image` route that works with
-text-only primary models, and broad source-code text support through the common attachment
-tools. Existing attachment sidecars are lazily reclassified
-after identity and Artifact-integrity checks, so files stored before a reader
-was added gain the new capability without re-uploading. Successful uploads
-must have an approved content reader; unsupported archives, CDF-5, audio/video,
-executables, and unknown binaries fail before Artifact publication. Phase 3
-adds a replay-safe Crossref Provider, owner-bound encrypted continuations,
-crash recovery with exact replay, evidence-grade PDF receipts, deterministic
-SourceRecord registration, Host-validated Evidence Candidates, authoritative
-Coordinator commits, and citation checks. Crossref pagination uses a bounded,
-stateless offset held only in the encrypted Host continuation; the upstream
-service's stateful scroll cursor is deliberately not used because reissuing the
-same cursor can return a different page.
+> **Current status:** `0.1.0` is a private release candidate. The repository is
+> available only to invited collaborators, and the npm packages have not been
+> published. The complete local release gate has passed; public distribution
+> remains disabled until explicitly authorized.
 
-Phase 4 adds a bounded read-only Git Provider, immutable RepositoryAudit and
-method/code delta records, baseline-bound ReproductionPlans, later-audit
-Project TestSpecs, source-tree-bound local runs, Host-committed JSON
-ReproductionReports, and Reviewer Artifact access. Experiment children receive
-only candidate tools; the root delegation wrapper revalidates and commits a
-strict report. Dynamic smoke and generic shell entrypoints remain unavailable.
+GeoResearch targets DeepSeek Harness `0.1.0-rc.5` and implements a DSH Standard
+Community v0.15 Host component. See the
+[compatibility matrix](docs/compatibility-matrix.md) for the exact supported
+environment.
 
-Phase 5 adds a persistent bounded Python geospatial Provider, deterministic
-DatasetManifest inspection, frozen ExperimentSpecs and Amendments, formal Runs,
-and Host-derived ResultRecords. Phase 6 adds mandatory ValidationPlans,
-immutable Reviewer records, user-approved Claims, complete WritingPackets, an
-isolated Writing role, and deterministic manuscript traceability audits. Phase
-7 closes the product with a self-contained installer tarball test, Windows
-functional probes, scientific golden cases, release documentation, a strict
-compatibility matrix, and a public Rasterio/GeoTIFF end-to-end activation case.
+## What GeoResearch Does
 
-The upstream baseline is pinned to the official DeepSeek Harness GitHub source
-archive at commit `47f943859bef60e4160492346772ded9b24f765a`. The archive,
-source tree, and upstream lockfile are verified before the local development
-mirror is checked against the fixed structured-output patch manifest in
-`docs/harness-local-patch.json`. `pnpm run baseline` records the proof, and the
-test suite rejects any local Harness difference outside that manifest.
+GeoResearch is designed for research work that must remain inspectable after
+the conversation ends. It stores the important parts of a project as typed,
+versioned records instead of relying only on chat history.
 
-## Scientific Skill Library
-
-The GeoResearch preset ships DeepSeek Harness-native Skills through
-`@deepseek-ai/dsh-skill-filesystem`. The Harness publishes only each Skill's
-`name` and `description` in the model catalog, then loads the full
-`SKILL.md` body on demand. Supporting references remain relative to the loaded
-Skill directory and are read only when the workflow needs them.
-
-The library treats a Skill as a versioned expert research protocol rather than
-as an autonomous authority:
-
-- `georesearch` coordinates the complete research lifecycle and role routing;
-- `literature-review` covers search, screening, evidence extraction, and
-  synthesis;
-- `geospatial-data` covers spatial identity, compatibility, scale, masks,
-  labels, and leakage;
-- `remote-sensing-experiment` covers hypotheses, sensor-aware experiment
-  design, execution candidates, and result analysis;
-- `spatial-statistics` covers spatial sampling, dependence, validation,
-  inference, map accuracy, and uncertainty;
-- `paper-reproduction` covers paper, repository, environment, and result
-  reproduction;
-- `scientific-validation` covers independent deterministic and methodological
-  review;
-- `manuscript-writing` drafts only from an approved WritingPacket.
-
-The Skills use only tools visible in the current `georesearch:runtime`
-snapshot. Specialist output remains a candidate, while Host services retain
-authoritative commit, run, validation, claim, and writing eligibility.
-
-Managed specialist delegations use explicit task types and role charters. The
-Host derives the core Skills for each task, restricts optional Skills by role,
-and keeps the dynamic task contract outside the child's cache-sensitive first
-request. Each child first calls the fixed `delegation_bootstrap` tool exactly
-once, then loads all Host-required Skills through the Harness `skill` tool.
-Other child tools remain blocked until both steps complete. Delegation results
-report the Host-observed Skill loads and accept only task-compatible output
-kinds.
-
-## Local development
-
-```powershell
-pnpm install
-pnpm run build
-pnpm run dsh-std:check
-pnpm run phase7:gate
-node packages/installer/lib/cli.js install --dsh-home <dsh-home> --distribution-dir dist\distribution --harness-root <harness-root>
+```text
+Research brief
+  -> literature, papers, files, and repositories
+  -> reproduction plans and experiments
+  -> independent validation
+  -> user-approved claims
+  -> writing packet and manuscript
 ```
 
-Run the complete release-candidate verification only from a clean Git worktree
-in the interactive Windows user context that owns `DSH_HOME`:
+The Coordinator can delegate bounded work to literature, experiment, review,
+and writing specialists, but Host services remain responsible for authoritative
+project state, formal runs, evidence, validation, claims, and final
+deliverables.
+
+## Core Capabilities
+
+| Area | What you can do |
+| --- | --- |
+| Research projects | Turn a question into a persistent ResearchBrief, track project state, retain artifacts, and resume work across sessions. |
+| Literature and evidence | Search Crossref, read papers, register source records, retain evidence-grade PDF receipts, and validate citations. |
+| Files and attachments | Inspect mixed uploads including PDF, Office/OpenDocument files, EPUB, notebooks, archives, source code, images, SQLite, HDF5, NetCDF, and Parquet. |
+| Repository reproduction | Audit Git repositories through a bounded read-only provider, compare methods with code, define reproduction plans and tests, and retain reproducible reports. |
+| Geospatial experiments | Inspect scientific and raster data, validate spatial identity and CRS, create frozen experiment specifications, run approved Python work, and record derived results. |
+| Validation and writing | Require independent review before claims are approved, build traceable WritingPackets, and draft manuscripts only from validated project records. |
+| Specialist skills | Use built-in protocols for literature review, geospatial data, remote-sensing experiments, spatial statistics, paper reproduction, scientific validation, and manuscript writing. |
+
+Automatic image and document-image understanding uses
+`deepseek-v4-flash-vision-exp` when a managed `DEEPSEEK_API_KEY` is available.
+Native-model vision and local OCR remain explicit fallbacks. Instructions found
+inside uploaded images are always treated as untrusted data.
+
+## Safety and Traceability
+
+- Candidate work and authoritative records are separated. A specialist cannot
+  silently turn its own output into accepted evidence, a formal result, or a
+  scientific claim.
+- Project records, artifacts, runs, evidence, reviews, claims, and writing
+  packets are content-bound and checked before downstream use.
+- Repository access is read-only. Experiment execution is bounded and runs
+  through managed services instead of exposing a generic shell entry point.
+- Installation, upgrade, recovery, verification, and uninstall are explicit
+  operations. The installer does not use `postinstall` and does not modify the
+  DeepSeek Harness source tree.
+- Session telemetry is disabled in the managed GeoResearch runtime.
+
+The exact permissions and standard component identity are documented in
+[DSH Standard conformance](docs/dsh-standard-conformance.md).
+
+## Requirements
+
+| Component | Supported version |
+| --- | --- |
+| Operating system | Windows 10 or Windows 11 x64 |
+| DeepSeek Harness | `0.1.0-rc.5` with the verified GeoResearch compatibility patch |
+| Node.js | `^22.19.0` or `>=24.0.0` |
+| pnpm | `11.7.0` for source builds |
+| Python | 3.10 or newer for geospatial workflows |
+| Python packages | `rasterio` and `pyproj` for raster inspection and CRS normalization |
+| Git | Available on `PATH` for repository audit and reproduction workflows |
+
+Close running DeepSeek Harness processes before installing, upgrading,
+recovering, or uninstalling GeoResearch. The default Harness home is
+`%USERPROFILE%\.dsh`; set `DSH_HOME` or pass `--dsh-home` to use another path.
+
+## Get GeoResearch
+
+### Private preview from source
+
+This is the currently available installation path. You need access to the
+private repository and a local checkout of the supported DeepSeek Harness
+source.
+
+Clone the repository with GitHub CLI:
 
 ```powershell
-pnpm run release:gate
+gh repo clone LYP-PYL/georesearch-dsh
+cd georesearch-dsh
 ```
 
-That command prepares the pinned pnpm shim, installs the frozen lockfile,
-audits production dependencies, runs the deterministic Phase 7 gate, verifies
-DSH Standard conformance, refreshes the public Phase 7 evidence, runs publint
-and `npm publish --dry-run` for all 26 packages, and writes the release manifest
-and checksums. It does not publish or upload any package.
+Or use Git directly after configuring GitHub authentication:
 
-`dist/distribution` and `dist/tarballs` are generated release evidence, not
-source authority. A publishable set exists only after the current workspace
-passes `pnpm run pack`; the verifier rejects stale package trees, manifest
-drift, missing or extra archives, and an installer whose embedded distribution
-differs from the freshly generated distribution.
+```powershell
+git clone https://github.com/LYP-PYL/georesearch-dsh.git
+cd georesearch-dsh
+```
 
-The installer never uses `postinstall` and never modifies the Harness source
-tree. The Phase 7 gate reruns all deterministic Phase 1 through Phase 6 foundations,
-verifies every packed tarball in an isolated temporary project without package
-manager installation or workspace links, performs a real Harness boot with all
-seven runtime probes, verifies the Project/Run, attachment, continuation,
-Provider, PDF lineage, Evidence, Repository, Experiment, Validation, Claim, and
-Writing boundaries, probes the Python worker, runs scientific golden cases, and
-verifies real Windows DPAPI nonce protection. The Phase 3 live probe performs a
-real Crossref/PDF/Evidence workflow. The Phase 4 live probe clones a public
-repository, records its exact commit and source-tree digest, and commits a
-Reviewer-readable reproduction diagnosis. The Phase 5 probe checks public
-Natural Earth data, and the Phase 7 probe carries a public Rasterio repository,
-documentation PDF, and GeoTIFF through the complete scientific authority chain.
-See `docs/phase1-gate.md` through `docs/phase7-gate.md` for the recorded boundaries,
-plus `docs/installation-and-operations.md`, `docs/provider-extension.md`, and
-`docs/compatibility-matrix.md` for release operations. The verified DeepSeek
-visual-model facts, request policy, local bounds, fallback order, and image
-prompt-injection boundary are recorded in `docs/deepseek-vision.md`.
+Prepare the workspace and build the managed distribution:
 
-## Run from a Web Profile
+```powershell
+corepack enable
+corepack prepare pnpm@11.7.0 --activate
+pnpm install --frozen-lockfile
+pnpm run distribution
+```
+
+Install and verify the private release candidate:
+
+```powershell
+$dshHome = Join-Path $env:USERPROFILE '.dsh'
+
+node packages/installer/lib/cli.js install `
+  --dsh-home $dshHome `
+  --distribution-dir dist\distribution `
+  --harness-root C:\path\to\deepseek-harness
+
+node packages/installer/lib/cli.js verify --dsh-home $dshHome
+```
+
+Replace `C:\path\to\deepseek-harness` with the supported Harness source
+checkout. The installer integrates GeoResearch into every existing Web Profile
+that contains `@deepseek-ai/dsh-web-app` and also creates a managed
+`georesearch` diagnostic Profile.
+
+### Published npm package
+
+After public release is authorized, the self-contained installer will be
+available through npm. These commands are intentionally **not available yet**:
+
+```powershell
+$dshHome = Join-Path $env:USERPROFILE '.dsh'
+npx --yes @georesearch/dsh-installer@0.1.0 install --dsh-home $dshHome
+npx --yes @georesearch/dsh-installer@0.1.0 verify --dsh-home $dshHome
+```
+
+The published installer carries its complete distribution and does not require
+a repository checkout or a separate `--distribution-dir`.
+
+## First Run
+
+Start an installed Web Profile:
 
 ```powershell
 dsh --profile web
 ```
 
-The installer discovers every existing Profile whose bundle list contains
-`@deepseek-ai/dsh-web-app`, appends `@georesearch/dsh-bundle`, and publishes the
-runtime packages under `$DSH_HOME/profiles/node_modules/@georesearch`. Package
-resolution therefore does not depend on a port, workspace path, Profile name,
-username, or checkout location. A later `upgrade` also integrates Web Profiles
-created after the original installation.
+You can also start the managed diagnostic Profile:
 
-The managed `georesearch` Profile remains the integrity-checked installation
-carrier and a diagnostic launch target, but it is no longer the only supported
-host. The installer never writes a global `agent-presets.default` setting.
+```powershell
+dsh --profile georesearch
+```
+
+In the Web UI:
+
+1. Open **Settings -> Models**, configure a DeepSeek model and save the API
+   credential.
+2. Choose the workspace that will contain the research project and its
+   deliverables.
+3. Start a new session with the **GeoResearch** preset.
+4. Describe the research question and attach any papers, datasets, images, or
+   repositories that should form the initial evidence base.
+
+Example requests:
+
+```text
+Create a research brief for evaluating urban heat-island change from
+multi-temporal satellite imagery. Identify the evidence and data still needed.
+```
+
+```text
+Search the literature for validation strategies for spatially autocorrelated
+remote-sensing models, then register the strongest sources in this project.
+```
+
+```text
+Inspect the attached GeoTIFF files, compare their CRS and resolution, and
+propose a reproducible experiment. Do not run it until I approve the plan.
+```
+
+```text
+Audit this paper and repository, build a reproduction plan, and separate
+verified findings from claims that still require review.
+```
+
+## Operations
+
+The installer supports `install`, `upgrade`, `verify`, `recover`, and
+`uninstall`. Use `verify` after installation, after a Harness repair, and before
+an upgrade. Use `recover` after an interrupted mutating operation instead of
+manually deleting transaction files.
+
+See [Installation and Operations](docs/installation-and-operations.md) for the
+complete procedures and recovery rules.
+
+## Documentation
+
+- [Installation and Operations](docs/installation-and-operations.md)
+- [Compatibility Matrix](docs/compatibility-matrix.md)
+- [Attachment and visual-model boundary](docs/deepseek-vision.md)
+- [DSH Standard conformance](docs/dsh-standard-conformance.md)
+- [Provider extension guide](docs/provider-extension.md)
+- [Release gate and verification evidence](docs/phase7-gate.md)
+
+## Development
+
+```powershell
+pnpm install --frozen-lockfile
+pnpm run build
+pnpm test
+pnpm run dsh-std:check
+```
+
+Maintainers can run the complete release-candidate gate from a clean Git
+worktree:
+
+```powershell
+pnpm run release:gate
+```
+
+The gate performs deterministic tests, Windows functional probes, scientific
+golden tests, DSH Standard validation, live release evidence, package linting,
+and `npm publish --dry-run` for all release packages. It writes the release
+manifest and checksums but never publishes or uploads a package.
+
+## License
+
+[MIT](LICENSE)
