@@ -34,7 +34,7 @@ for (const [name, command] of Object.entries(requiredScripts)) {
 const publicationWorkflow = await readFile(join(root, '.github', 'workflows', 'publish-npm.yml'), 'utf8')
 for (const token of [
   'workflow_dispatch:',
-  'contents: read',
+  'contents: write',
   'id-token: write',
   "github.repository == 'georesearch-dsh/georesearch-dsh'",
   "--pattern '*.tgz'",

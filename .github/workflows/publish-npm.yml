@@ -11,7 +11,8 @@ on:
         type: string
 
 permissions:
-  contents: read
+  # Draft Releases are only visible to tokens with push-level repository access.
+  contents: write
   id-token: write
 
 concurrency:
