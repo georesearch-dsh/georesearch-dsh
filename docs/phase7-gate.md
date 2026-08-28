@@ -128,7 +128,7 @@ red square. The request completed with 303 prompt tokens and 25 completion
 tokens. This network smoke supplements the deterministic mocked API boundary;
 it is not required for offline release-gate reproducibility.
 
-The latest public end-to-end run completed at `2026-08-28T04:11:49.314Z`
+A public end-to-end run completed at `2026-08-28T04:11:49.314Z`
 (`2026-08-28 12:11:49` Asia/Shanghai). All 17 business checks and all seven
 Provider lifecycle checks passed, including real-current-user Windows DPAPI,
 and the temporary public-test state was removed.
