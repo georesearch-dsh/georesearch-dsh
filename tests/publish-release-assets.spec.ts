@@ -65,7 +65,7 @@ function createManifest(
     productVersion: '0.1.0',
     createdAt: '2026-08-27T10:30:00.611Z',
     source: {
-      repository: 'git+https://github.com/LYP-PYL/georesearch-dsh.git',
+      repository: 'git+https://github.com/georesearch-dsh/georesearch-dsh.git',
       commit: 'a'.repeat(40),
       tree: 'b'.repeat(40),
       clean: true,

@@ -8,8 +8,8 @@ Agent 插件。它将研究问题、论文、源代码仓库和科学数据组�
 文献综述、论文复现、地理空间实验、独立验证和论文写作准备。
 
 > **当前版本：** `0.1.0` 已通过 npm 和公开的
-> [GitHub 仓库](https://github.com/LYP-PYL/georesearch-dsh)发布。正式版本对应 annotated
-> [`v0.1.0`](https://github.com/LYP-PYL/georesearch-dsh/releases/tag/v0.1.0) 标签，全部 26 个
+> [GitHub 仓库](https://github.com/georesearch-dsh/georesearch-dsh)发布。正式版本对应 annotated
+> [`v0.1.0`](https://github.com/georesearch-dsh/georesearch-dsh/releases/tag/v0.1.0) 标签，全部 26 个
 > npm 包都包含 registry provenance。
 
 GeoResearch 当前面向 DeepSeek Harness `0.1.0-rc.5`，并实现了 DSH Standard Community
@@ -89,7 +89,7 @@ npx --yes @georesearch/dsh-installer@0.1.0 verify --dsh-home $dshHome
 
 自包含安装器携带完整的 GeoResearch 分发包，不需要本仓库源码、单独安装其他包或传入
 `--distribution-dir`。发布资产和校验和可从
-[`v0.1.0` Release 页面](https://github.com/LYP-PYL/georesearch-dsh/releases/tag/v0.1.0)下载。
+[`v0.1.0` Release 页面](https://github.com/georesearch-dsh/georesearch-dsh/releases/tag/v0.1.0)下载。
 
 ### 从源码构建
 
@@ -98,14 +98,14 @@ npx --yes @georesearch/dsh-installer@0.1.0 verify --dsh-home $dshHome
 使用 GitHub CLI 克隆仓库：
 
 ```powershell
-gh repo clone LYP-PYL/georesearch-dsh
+gh repo clone georesearch-dsh/georesearch-dsh
 cd georesearch-dsh
 ```
 
 也可以在配置好 GitHub 身份验证后直接使用 Git：
 
 ```powershell
-git clone https://github.com/LYP-PYL/georesearch-dsh.git
+git clone https://github.com/georesearch-dsh/georesearch-dsh.git
 cd georesearch-dsh
 ```
 

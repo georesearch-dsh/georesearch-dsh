@@ -9,9 +9,9 @@ import { formatMessage } from 'publint/utils'
 import { WORKSPACE_PACKAGES } from './workspace-packages.ts'
 
 const root = resolve(fileURLToPath(new URL('..', import.meta.url)))
-const repositoryUrl = 'git+https://github.com/LYP-PYL/georesearch-dsh.git'
-const homepageUrl = 'https://github.com/LYP-PYL/georesearch-dsh#readme'
-const bugsUrl = 'https://github.com/LYP-PYL/georesearch-dsh/issues'
+const repositoryUrl = 'git+https://github.com/georesearch-dsh/georesearch-dsh.git'
+const homepageUrl = 'https://github.com/georesearch-dsh/georesearch-dsh#readme'
+const bugsUrl = 'https://github.com/georesearch-dsh/georesearch-dsh/issues'
 const registryUrl = 'https://registry.npmjs.org/'
 const rootManifest = await readJson(join(root, 'package.json')) as PackageManifest & {
   readonly packageManager: string

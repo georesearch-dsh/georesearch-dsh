@@ -36,7 +36,7 @@ for (const token of [
   'workflow_dispatch:',
   'contents: read',
   'id-token: write',
-  "github.repository == 'LYP-PYL/georesearch-dsh'",
+  "github.repository == 'georesearch-dsh/georesearch-dsh'",
   "--pattern '*.tgz'",
   "--pattern 'release-manifest.json'",
   "--pattern 'SHA256SUMS'",
@@ -48,7 +48,7 @@ for (const token of [
 
 const publicationScript = await readFile(join(root, 'scripts', 'publish-release-assets.ts'), 'utf8')
 for (const token of [
-  "const expectedRepository = 'LYP-PYL/georesearch-dsh'",
+  "const expectedRepository = 'georesearch-dsh/georesearch-dsh'",
   "const provenancePredicate = 'https://slsa.dev/provenance/v1'",
   "releaseTag !== `v${productVersion}`",
   "runChecked('git', ['cat-file', '-t', `refs/tags/${releaseTag}`])",
@@ -132,9 +132,9 @@ const packageDirectories = (await readdir(join(root, 'packages'), { withFileType
   .map(entry => entry.name)
   .sort()
 const packageNames: string[] = []
-const expectedRepository = 'git+https://github.com/LYP-PYL/georesearch-dsh.git'
-const expectedHomepage = 'https://github.com/LYP-PYL/georesearch-dsh#readme'
-const expectedBugs = 'https://github.com/LYP-PYL/georesearch-dsh/issues'
+const expectedRepository = 'git+https://github.com/georesearch-dsh/georesearch-dsh.git'
+const expectedHomepage = 'https://github.com/georesearch-dsh/georesearch-dsh#readme'
+const expectedBugs = 'https://github.com/georesearch-dsh/georesearch-dsh/issues'
 for (const directory of packageDirectories) {
   const manifestPath = join(root, 'packages', directory, 'package.json')
   await access(manifestPath)

@@ -9,8 +9,8 @@ into a persistent, auditable workflow for literature review, reproduction,
 geospatial experiments, validation, and manuscript preparation.
 
 > **Current release:** `0.1.0` is available from npm and the public
-> [GitHub repository](https://github.com/LYP-PYL/georesearch-dsh). The release
-> was built from the annotated [`v0.1.0`](https://github.com/LYP-PYL/georesearch-dsh/releases/tag/v0.1.0)
+> [GitHub repository](https://github.com/georesearch-dsh/georesearch-dsh). The release
+> was built from the annotated [`v0.1.0`](https://github.com/georesearch-dsh/georesearch-dsh/releases/tag/v0.1.0)
 > tag, and all 26 npm packages include registry provenance.
 
 GeoResearch targets DeepSeek Harness `0.1.0-rc.5` and implements a DSH Standard
@@ -103,7 +103,7 @@ npx --yes @georesearch/dsh-installer@0.1.0 verify --dsh-home $dshHome
 The self-contained installer carries the complete GeoResearch distribution. It
 does not require this repository, a separate package installation, or a
 `--distribution-dir`. Release assets and checksums are available on the
-[`v0.1.0` release page](https://github.com/LYP-PYL/georesearch-dsh/releases/tag/v0.1.0).
+[`v0.1.0` release page](https://github.com/georesearch-dsh/georesearch-dsh/releases/tag/v0.1.0).
 
 ### Build from source
 
@@ -113,14 +113,14 @@ the complete source and release gate:
 Clone the repository with GitHub CLI:
 
 ```powershell
-gh repo clone LYP-PYL/georesearch-dsh
+gh repo clone georesearch-dsh/georesearch-dsh
 cd georesearch-dsh
 ```
 
 Or use Git directly after configuring GitHub authentication:
 
 ```powershell
-git clone https://github.com/LYP-PYL/georesearch-dsh.git
+git clone https://github.com/georesearch-dsh/georesearch-dsh.git
 cd georesearch-dsh
 ```
 

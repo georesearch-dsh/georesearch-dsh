@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   publish:
-    if: github.repository == 'LYP-PYL/georesearch-dsh'
+    if: github.repository == 'georesearch-dsh/georesearch-dsh'
     runs-on: ubuntu-latest
     timeout-minutes: 90
 

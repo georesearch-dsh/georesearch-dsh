@@ -50,11 +50,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LYP-PYL/georesearch-dsh.git"
+    "url": "git+https://github.com/georesearch-dsh/georesearch-dsh.git"
   },
-  "homepage": "https://github.com/LYP-PYL/georesearch-dsh#readme",
+  "homepage": "https://github.com/georesearch-dsh/georesearch-dsh#readme",
   "bugs": {
-    "url": "https://github.com/LYP-PYL/georesearch-dsh/issues"
+    "url": "https://github.com/georesearch-dsh/georesearch-dsh/issues"
   },
   "publishConfig": {
     "access": "public",

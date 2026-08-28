@@ -4,8 +4,8 @@ import { readFile, readdir } from 'node:fs/promises'
 import { basename, join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 
-const expectedRepository = 'LYP-PYL/georesearch-dsh'
-const expectedRepositoryUrl = 'git+https://github.com/LYP-PYL/georesearch-dsh.git'
+const expectedRepository = 'georesearch-dsh/georesearch-dsh'
+const expectedRepositoryUrl = 'git+https://github.com/georesearch-dsh/georesearch-dsh.git'
 const expectedRegistry = 'https://registry.npmjs.org/'
 const provenancePredicate = 'https://slsa.dev/provenance/v1'
 
