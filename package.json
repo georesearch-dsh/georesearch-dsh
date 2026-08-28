@@ -42,6 +42,7 @@
     "audit:prod": "pnpm audit --prod --audit-level high",
     "release:preflight": "node --experimental-strip-types scripts/verify-release-environment.ts && pnpm run probe:dpapi",
     "release:check": "node --experimental-strip-types scripts/verify-release-readiness.ts",
+    "release:publish-assets": "node --experimental-strip-types scripts/publish-release-assets.ts",
     "release:gate": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-release-gate.ps1",
     "phase1:gate": "pnpm test && pnpm run pack && pnpm run probe:worker && pnpm run probe:dpapi",
     "phase2:boundary": "node --experimental-strip-types scripts/verify-phase2-boundary.ts",

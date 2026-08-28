@@ -8,10 +8,10 @@ research question, a set of papers, source repositories, and scientific data
 into a persistent, auditable workflow for literature review, reproduction,
 geospatial experiments, validation, and manuscript preparation.
 
-> **Current status:** `0.1.0` is a private release candidate. The repository is
-> available only to invited collaborators, and the npm packages have not been
-> published. The complete local release gate has passed; public distribution
-> remains disabled until explicitly authorized.
+> **Current release:** `0.1.0` is available from npm and the public
+> [GitHub repository](https://github.com/LYP-PYL/georesearch-dsh). The release
+> was built from the annotated [`v0.1.0`](https://github.com/LYP-PYL/georesearch-dsh/releases/tag/v0.1.0)
+> tag, and all 26 npm packages include registry provenance.
 
 GeoResearch targets DeepSeek Harness `0.1.0-rc.5` and implements a DSH Standard
 Community v0.15 Host component. See the
@@ -90,11 +90,25 @@ recovering, or uninstalling GeoResearch. The default Harness home is
 
 ## Get GeoResearch
 
-### Private preview from source
+### Install from npm
 
-This is the currently available installation path. You need access to the
-private repository and a local checkout of the supported DeepSeek Harness
-source.
+Use the exact installer version so the managed distribution remains pinned:
+
+```powershell
+$dshHome = Join-Path $env:USERPROFILE '.dsh'
+npx --yes @georesearch/dsh-installer@0.1.0 install --dsh-home $dshHome
+npx --yes @georesearch/dsh-installer@0.1.0 verify --dsh-home $dshHome
+```
+
+The self-contained installer carries the complete GeoResearch distribution. It
+does not require this repository, a separate package installation, or a
+`--distribution-dir`. Release assets and checksums are available on the
+[`v0.1.0` release page](https://github.com/LYP-PYL/georesearch-dsh/releases/tag/v0.1.0).
+
+### Build from source
+
+Clone the public repository if you are developing GeoResearch or need to audit
+the complete source and release gate:
 
 Clone the repository with GitHub CLI:
 
@@ -119,7 +133,7 @@ pnpm install --frozen-lockfile
 pnpm run distribution
 ```
 
-Install and verify the private release candidate:
+Install and verify the locally built distribution:
 
 ```powershell
 $dshHome = Join-Path $env:USERPROFILE '.dsh'
@@ -136,20 +150,6 @@ Replace `C:\path\to\deepseek-harness` with the supported Harness source
 checkout. The installer integrates GeoResearch into every existing Web Profile
 that contains `@deepseek-ai/dsh-web-app` and also creates a managed
 `georesearch` diagnostic Profile.
-
-### Published npm package
-
-After public release is authorized, the self-contained installer will be
-available through npm. These commands are intentionally **not available yet**:
-
-```powershell
-$dshHome = Join-Path $env:USERPROFILE '.dsh'
-npx --yes @georesearch/dsh-installer@0.1.0 install --dsh-home $dshHome
-npx --yes @georesearch/dsh-installer@0.1.0 verify --dsh-home $dshHome
-```
-
-The published installer carries its complete distribution and does not require
-a repository checkout or a separate `--distribution-dir`.
 
 ## First Run
 
@@ -215,6 +215,7 @@ complete procedures and recovery rules.
 - [DSH Standard conformance](docs/dsh-standard-conformance.md)
 - [Provider extension guide](docs/provider-extension.md)
 - [Release gate and verification evidence](docs/phase7-gate.md)
+- [`v0.1.0` release notes](docs/releases/v0.1.0.md)
 
 ## Development
 

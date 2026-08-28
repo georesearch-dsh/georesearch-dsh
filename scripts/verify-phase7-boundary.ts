@@ -17,6 +17,7 @@ const requiredScripts = {
   'audit:prod': 'pnpm audit --prod --audit-level high',
   'release:preflight': 'node --experimental-strip-types scripts/verify-release-environment.ts && pnpm run probe:dpapi',
   'release:check': 'node --experimental-strip-types scripts/verify-release-readiness.ts',
+  'release:publish-assets': 'node --experimental-strip-types scripts/publish-release-assets.ts',
   'release:gate': 'powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-release-gate.ps1',
   'probe:phase7-live': 'node --experimental-strip-types scripts/probe-phase7-live.ts',
   'test:tarball-clean-home': 'vitest run packages/installer/tests/tarball-clean-home.spec.ts',
@@ -28,6 +29,35 @@ const requiredScripts = {
 } as const
 for (const [name, command] of Object.entries(requiredScripts)) {
   if (rootManifest.scripts[name] !== command) throw new Error(`Phase 7 script is missing or changed: ${name}`)
+}
+
+const publicationWorkflow = await readFile(join(root, '.github', 'workflows', 'publish-npm.yml'), 'utf8')
+for (const token of [
+  'workflow_dispatch:',
+  'contents: read',
+  'id-token: write',
+  "github.repository == 'LYP-PYL/georesearch-dsh'",
+  "--pattern '*.tgz'",
+  "--pattern 'release-manifest.json'",
+  "--pattern 'SHA256SUMS'",
+  'NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}',
+  'scripts/publish-release-assets.ts',
+]) {
+  if (!publicationWorkflow.includes(token)) throw new Error(`npm publication workflow omits ${token}`)
+}
+
+const publicationScript = await readFile(join(root, 'scripts', 'publish-release-assets.ts'), 'utf8')
+for (const token of [
+  "const expectedRepository = 'LYP-PYL/georesearch-dsh'",
+  "const provenancePredicate = 'https://slsa.dev/provenance/v1'",
+  "releaseTag !== `v${productVersion}`",
+  "runChecked('git', ['cat-file', '-t', `refs/tags/${releaseTag}`])",
+  "'publish', path",
+  "'--provenance'",
+  'assertPublishedVersion(entry, metadata)',
+  'addDistTag(entry, manifest.publish.finalTag',
+]) {
+  if (!publicationScript.includes(token)) throw new Error(`npm publication script omits ${token}`)
 }
 
 const workspaceConfig = await readFile(join(root, 'pnpm-workspace.yaml'), 'utf8')
@@ -254,6 +284,7 @@ const documentation = {
   compatibility: await readFile(join(root, 'docs', 'compatibility-matrix.md'), 'utf8'),
   vision: await readFile(join(root, 'docs', 'deepseek-vision.md'), 'utf8'),
   gate: await readFile(join(root, 'docs', 'phase7-gate.md'), 'utf8'),
+  release: await readFile(join(root, 'docs', 'releases', 'v0.1.0.md'), 'utf8'),
 }
 for (const command of ['install', 'upgrade', 'verify', 'recover', 'uninstall', '--reconcile-home-patch']) {
   if (!documentation.installation.includes(command)) throw new Error(`operator guide omits ${command}`)
@@ -272,6 +303,9 @@ for (const token of [
 }
 for (const token of ['release:gate', 'release:check', 'phase7:gate', 'probe:phase7-live', '44 release criteria']) {
   if (!documentation.gate.includes(token)) throw new Error(`Phase 7 gate document omits ${token}`)
+}
+for (const token of ['v0.1.0', '26 public packages', 'npm SLSA provenance', 'SHA256SUMS']) {
+  if (!documentation.release.includes(token)) throw new Error(`v0.1.0 release notes omit ${token}`)
 }
 for (const token of [
   'deepseek-v4-flash-vision-exp',

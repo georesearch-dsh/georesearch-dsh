@@ -38,6 +38,25 @@ the tarball exists. `release-metadata.json` pins the versioned distribution
 creation time, so repeated builds produce the same manifest digest instead of
 embedding the wall clock.
 
+## Publication Boundary
+
+Formal publication uses the annotated SemVer tag `v0.1.0`. The local gate
+produces 26 tarballs, `release-manifest.json`, and `SHA256SUMS`; those exact
+files are uploaded to a draft GitHub Release before publication starts.
+
+The manually dispatched `publish-npm.yml` workflow checks out the annotated
+tag, downloads the draft Release assets, verifies every byte count, SHA-256,
+SHA-512 integrity value, package identity, source commit, source tree, and
+topological order, and then publishes from a GitHub-hosted runner with npm
+provenance. Packages first receive the immutable release version under
+`candidate-0-1-0`. Only after all 26 versions and provenance attestations are
+visible does the workflow promote every package to `latest`.
+
+The publication script is resumable. A matching version with matching
+integrity and provenance is skipped; an existing immutable version with any
+different content stops the release. The GitHub Release remains a draft until
+all npm verification has succeeded.
+
 `probe:phase7-live` writes `dist/reports/phase7-live-e2e.json`. It clones the
 pinned Rasterio repository, reads the public Rasterio documentation PDF,
 registers the public `RGB.byte.tif` GeoTIFF, performs a source-tree-bound
@@ -93,6 +112,8 @@ The 44 release criteria in the development guide are covered as follows:
 - `compatibility-matrix.md` pins the supported runtime and attachment formats.
 - `deepseek-vision.md` pins the official visual-model facts, request envelope,
   credential handling, fallback order, and untrusted-image boundary.
+- `releases/v0.1.0.md` records the public release contents, installation entry
+  point, compatibility boundary, and verification properties.
 
 The Phase 7 boundary fails if any of these documents, release scripts, package
 versions, compatibility peers, tarball evidence, Windows tests, golden cases,

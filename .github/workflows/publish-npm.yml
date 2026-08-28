@@ -1,0 +1,63 @@
+name: Publish npm release
+
+run-name: Publish ${{ inputs.release_tag }} to npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Annotated release tag whose draft Release contains the verified assets
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: npm-release-${{ inputs.release_tag }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'LYP-PYL/georesearch-dsh'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Check out the annotated release tag
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ inputs.release_tag }}
+
+      - name: Set up Node.js and npm
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org/
+
+      - name: Download immutable draft Release assets
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          set -euo pipefail
+          assets="$RUNNER_TEMP/release-assets"
+          mkdir -p "$assets"
+          gh release download "$RELEASE_TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --dir "$assets" \
+            --pattern '*.tgz' \
+            --pattern 'release-manifest.json' \
+            --pattern 'SHA256SUMS'
+
+      - name: Publish verified packages with npm provenance
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          RELEASE_ASSETS_DIR: ${{ runner.temp }}/release-assets
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: node --experimental-strip-types scripts/publish-release-assets.ts

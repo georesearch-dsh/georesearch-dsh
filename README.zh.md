@@ -7,8 +7,10 @@ GeoResearch 是面向
 Agent 插件。它将研究问题、论文、源代码仓库和科学数据组织成可持久化、可审计的完整工作流，覆盖
 文献综述、论文复现、地理空间实验、独立验证和论文写作准备。
 
-> **当前状态：** `0.1.0` 是私有发布候选版本。仓库仅向受邀协作者开放，npm 包尚未发布。
-> 完整的本地发布门禁已经通过；在获得明确授权前，项目不会开放公开分发。
+> **当前版本：** `0.1.0` 已通过 npm 和公开的
+> [GitHub 仓库](https://github.com/LYP-PYL/georesearch-dsh)发布。正式版本对应 annotated
+> [`v0.1.0`](https://github.com/LYP-PYL/georesearch-dsh/releases/tag/v0.1.0) 标签，全部 26 个
+> npm 包都包含 registry provenance。
 
 GeoResearch 当前面向 DeepSeek Harness `0.1.0-rc.5`，并实现了 DSH Standard Community
 v0.15 Host 组件边界。准确的支持范围请参阅
@@ -75,10 +77,23 @@ Coordinator 可以将有边界的任务委派给文献、实验、审查和写�
 
 ## 获取 GeoResearch
 
-### 从源码安装私有预览版
+### 通过 npm 安装
 
-这是当前可用的安装方式。你需要拥有私有仓库访问权限，并准备好受支持版本的 DeepSeek Harness
-源码目录。
+请使用精确版本安装，以确保受管理的分发包保持固定：
+
+```powershell
+$dshHome = Join-Path $env:USERPROFILE '.dsh'
+npx --yes @georesearch/dsh-installer@0.1.0 install --dsh-home $dshHome
+npx --yes @georesearch/dsh-installer@0.1.0 verify --dsh-home $dshHome
+```
+
+自包含安装器携带完整的 GeoResearch 分发包，不需要本仓库源码、单独安装其他包或传入
+`--distribution-dir`。发布资产和校验和可从
+[`v0.1.0` Release 页面](https://github.com/LYP-PYL/georesearch-dsh/releases/tag/v0.1.0)下载。
+
+### 从源码构建
+
+如果需要开发 GeoResearch，或者审计完整源码和发布门禁，可以克隆公开仓库：
 
 使用 GitHub CLI 克隆仓库：
 
@@ -103,7 +118,7 @@ pnpm install --frozen-lockfile
 pnpm run distribution
 ```
 
-安装并验证私有发布候选版本：
+安装并验证本地构建的分发包：
 
 ```powershell
 $dshHome = Join-Path $env:USERPROFILE '.dsh'
@@ -119,18 +134,6 @@ node packages/installer/lib/cli.js verify --dsh-home $dshHome
 请将 `C:\path\to\deepseek-harness` 替换为受支持的 Harness 源码目录。安装器会把
 GeoResearch 集成到所有包含 `@deepseek-ai/dsh-web-app` 的现有 Web Profile，并创建受管理的
 `georesearch` 诊断 Profile。
-
-### 正式发布后的 npm 安装
-
-在公开发布获得授权后，自包含安装器将通过 npm 提供。以下命令目前**尚不可用**：
-
-```powershell
-$dshHome = Join-Path $env:USERPROFILE '.dsh'
-npx --yes @georesearch/dsh-installer@0.1.0 install --dsh-home $dshHome
-npx --yes @georesearch/dsh-installer@0.1.0 verify --dsh-home $dshHome
-```
-
-正式发布的安装器会携带完整分发包，不需要仓库源码，也不需要额外的 `--distribution-dir`。
 
 ## 首次使用
 
@@ -187,6 +190,7 @@ dsh --profile georesearch
 - [DSH Standard 一致性说明](docs/dsh-standard-conformance.md)
 - [Provider 扩展指南](docs/provider-extension.md)
 - [发布门禁与验证证据](docs/phase7-gate.md)
+- [`v0.1.0` 发布说明](docs/releases/v0.1.0.md)
 
 ## 开发
 

@@ -24,7 +24,16 @@ parent lookup serves any Profile name. The journal snapshots every changed
 Profile file. Recovery restores those exact bytes; uninstall removes only the
 GeoResearch-owned dependencies and bundle while retaining later user changes.
 
-The current development distribution is supplied with `--distribution-dir`.
+The published `0.1.0` installer carries a self-contained `distribution.tar` and
+can be installed and verified with an exact npm version:
+
+```powershell
+npx --yes @georesearch/dsh-installer@0.1.0 install --dsh-home $env:DSH_HOME
+npx --yes @georesearch/dsh-installer@0.1.0 verify --dsh-home $env:DSH_HOME
+```
+
+Local development distributions can instead be supplied with
+`--distribution-dir`.
 The maintenance nonce is single-use, digest-only on disk, and passed to the
 activation child as a DPAPI CurrentUser-protected blob bound to the exact
 transaction, generation, executable, and deadline. Candidate and published
